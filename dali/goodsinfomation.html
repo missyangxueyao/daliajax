@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>商品信息</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="header">
+    <div class="header-main">
+        <h1><a href="index.html"></a></h1>
+        <ul>
+            <li class="header-active"><a href="index.html">首页</a></li>
+            <li><a href="homepage.html">管理中心</a></li>
+        </ul>
+        <p>MARU服装</p>
+    </div>
+</div>
+<p class="head-fg"></p>
+<div class="layout goodsinfomation">
+    <h1>商品信息</h1>
+    <p><em>款号：</em><input type="text" placeholder="请输入款号"></p>
+    <p><em>货号：</em><input type="text" placeholder="请输入货号"></p>
+    <p><em>商品名称：</em><input type="text" placeholder="请输入商品名称"></p>
+    <p><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
+    <p><em>大类：</em>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+    </p>
+    <p><em>款型：</em>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+    </p>
+    <p><em>款式定位：</em>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+    </p>
+    <p><em>性别：</em>
+        <select name="">
+            <option value=""> 男 </option>
+            <option value=""> 女 </option>
+        </select>
+    </p>
+    <p><em>货品：</em>
+        <select name="">
+            <option value="">成衣 </option>
+        </select>
+    </p>
+    <p><em>SKU：</em>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+    </p>
+    <p><em>系列：</em>
+        <select name="">
+            <option value="">THE.ME-al</option>
+        </select>
+    </p>
+    <p class="emtext">
+        <em>商品介绍：</em>
+        <textarea name="" placeholder="请输入商品介绍"></textarea>
+    </p>
+    <p>
+        <em>尺码：</em>
+        <strong>s</strong>
+        <strong>m</strong>
+        <strong>l</strong>
+        <strong>xl</strong>
+        <strong>xxl</strong>
+        <strong>xxxl</strong>
+    </p>
+    <p class="addcolor">
+        <em>颜色：</em>
+        <span class="spanactive">红色 <input type="text" placeholder="请输入价格"></span>
+        <span class="spanactive">白色 <input type="text" placeholder="请输入价格"></span>
+        <span class="spanactive">黑色 <input type="text" placeholder="请输入价格"></span>
+        <span class="addspan">+ 添加</span>
+    </p>
+    <p class="emtext">
+        <em>成分：</em>
+        <textarea name="" placeholder="例：成分：53.5%锦纶 28.0%粘纤 18.7%棉 里料：96%聚酯纤维 4%氨纶"></textarea>
+    </p>
+    <h1>价格信息</h1>
+    <p>
+        <em>面料价格：</em>
+        <input type="text" placeholder="请输入面料价格">
+        <select name="">
+            <option value="">RMB</option>
+        </select>
+    </p>
+    <p>
+        <em>辅料价格：</em>
+        <input type="text" placeholder="请输入辅料价格">
+        <select name="">
+            <option value="">美元</option>
+        </select>
+    </p>
+    <p>
+        <em>工价：</em>
+        <input type="text" placeholder="请输入工价">
+        <select name="">
+            <option value="">日元</option>
+        </select>
+    </p>
+    <p>
+        <em>其他价格(选填)：</em>
+        <input type="text" placeholder="请输入面料价格">
+        <select name="">
+            <option value="">欧元</option>
+        </select>
+    </p>
+    <p class="istax">
+        <em>是否含税：</em>
+        <strong>含税</strong>
+        <strong>不含税</strong>
+        <input type="text" placeholder="请输入含税比例">
+    </p>
+    <p>
+        <em>货期：</em>
+        <select name="">
+            <option value="">请选择</option>
+        </select>
+    </p>
+    <p class="addcolor">
+        <em>阶梯价格：</em>
+        <span class="spanactive">0~200 <input type="text" placeholder="请输入价格"></span>
+        <span class="spanactive">200~500 <input type="text" placeholder="请输入价格"></span>
+        <span class="spanactive">500以上 <input type="text" placeholder="请输入价格"></span>
+        <span class="addspan">+ 添加</span>
+    </p>
+    <p class="emtext">
+        <em>商品图片：</em>
+        <img src="images/addimg.png" alt="">
+        <img src="images/addimg.png" alt="">
+        <img src="images/addimg.png" alt="">
+    </p>
+    <p>
+        <em>起订量：</em>
+        <input type="text" placeholder="请输入起订量">
+    </p>
+    <p>
+        <em>货期：</em>
+        <input type="text" placeholder="请输入货期">
+    </p>
+</div>
+<div class="infosubmit"><a href="goodssubmit.html">提交</a></div>
+<div class="footer">
+    <h1>公司名称：达利（中国）有限公司</h1>
+    <h1>联系电话：400-888-8888</h1>
+    <h1>公司地址：杭州市萧山区钱农东路8号</h1>
+    <h1>Copyright © 2017 High Fashion Group.Built by</h1>
+    <img src="images/logo.png" alt="">
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script>
+    window.onload = function () {
+        $('.goodsinfomation p span').click(function(){
+            $(this).addClass('spanactive');
+        });
+        $('.goodsinfomation p strong').click(function(){
+            $(this).addClass('goodsinfomation-radiochecked').siblings().removeClass('goodsinfomation-radiochecked')
+        })
+    }
+</script>
+</body>
+
+</html>

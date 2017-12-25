@@ -1,0 +1,4 @@
+.logoin h1{margin-top: 40px;}
+.logoin-test{overflow: hidden}
+.logoin-test input{display: block;float: left;width: 110px;}
+.logoin-test span{background: #E8C574;color: #ffffff;text-align: center;line-height: 20px;border-radius: 30px;font-size: 12px;display: block;float: right;width: 70px;}

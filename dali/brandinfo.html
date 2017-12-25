@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>独立品牌完善资料</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="header">
+    <div class="header-main">
+        <!--<img src="images/logo.png">-->
+        <h1><a href="index.html"></a></h1>
+        <p>MARU服装</p>
+    </div>
+</div>
+<p class="head-fg"></p>
+<div class="layout">
+    <div class="infomationtitle">
+        <p class="infomationtitle-active"><span>1</span><em>完善资料</em></p>
+        <p><span>2</span><em>审核中</em></p>
+        <p><span>3</span><em>审核成功</em></p>
+    </div>
+    <div class="supplierclassify supplierclassify-one">
+        <h1>供应商分类</h1>
+        <div class="supplierclassify-radio supplierclassify-all">
+            <strong>供应商分类:</strong>
+            <p><input type="radio" name="supplier"><em onclick="redirect('infomation.html')"></em><span>ODM工厂</span></p>
+            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')"></em><span>设计室工作室</span></p>
+            <p><input type="radio" name="supplier"><em class="supplierclassify-radiochecked" onclick="redirect('brandinfo.html')"></em><span>独立品牌设计师</span></p>
+        </div>
+        <h1>基本信息</h1>
+        <div>
+            <!--独立品牌设计基本信息-->
+            <div class="supplierclassify-classify">
+                <div class="supplierclassify-info">
+                    <p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称"></p>
+                    <p class="designer-tip">
+                        <em>风格:</em>
+                        <span>欧美</span>
+                        <span>日韩</span>
+                        <span>中国风</span>
+                        <span>休闲</span>
+                        <span>时尚</span>
+                        <span>淑女</span>
+                        <span>牛仔</span>
+                    </p>
+                    <p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格"></textarea></p>
+                    <p>
+                        <em>品牌商标注册图:</em>
+                        <img src="images/addimg.png">
+                    </p>
+                    <p>
+                        <em>所在地区:</em>
+                        <select class="province"></select> -
+                        <select class="city"></select> -
+                        <select class="area"></select>
+                        <strong>（省、市、区）</strong>
+                    </p>
+                    <p><em>详细地址:</em><textarea placeholder="请输入详细地址" class="address"></textarea></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="companyinfo supplierclassify-one">
+        <h1>公司信息</h1>
+        <div class="supplierclassify-info companyinfo-contact">
+            <p><em>公司联系人:</em><input type="text" placeholder="请输入公司联系人"></p>
+            <p><em>联系电话:</em><input type="text" placeholder="请输入联系电话"></p>
+            <p><em>联系人邮箱:</em><input type="text" placeholder="请输入联系人邮箱"></p>
+        </div>
+        <div class="supplierclassify-radio tax-qualification">
+            <strong>纳税资格:</strong>
+            <p><input type="radio" name="nashui"><em></em><span>一般纳税人</span></p>
+            <p><input type="radio" name="nashui"><em></em><span>小规模纳税人</span></p>
+        </div>
+        <div class="supplierclassify-info companyinfo-tax">
+            <p><em>纳税编号:</em><input type="text" placeholder="请输入纳税编号"></p>
+            <p><em>纳税税率:</em><input type="text" placeholder="请输入纳税税率"></p>
+            <p><em>营业执照名称:</em><input type="text" placeholder="请输入营业执照名称"> <strong> 例：杭州XXX有限公司</strong></p>
+            <p>
+                <em>营业执照有效期:</em>
+                <select name="">
+                    <option value="">请选择</option>
+                </select> -
+                <select name="">
+                    <option value="">请选择</option>
+                    <option value="">1月</option>
+                    <option value="">2月</option>
+                    <option value="">3月</option>
+                    <option value="">4月</option>
+                    <option value="">5月</option>
+                    <option value="">6月</option>
+                    <option value="">7月</option>
+                    <option value="">8月</option>
+                    <option value="">9月</option>
+                    <option value="">10月</option>
+                    <option value="">11月</option>
+                    <option value="">12月</option>
+                </select> -
+                <select name="">
+                    <option value="">请选择</option>
+
+                </select>
+                <strong>（年、月、日）</strong>
+            </p>
+            <p>
+                <em>营业执照照片:</em>
+                <img src="images/addimg.png" class="addimg">
+                <!--<input type="file" style="display:none">-->
+            </p>
+            <p class="gongimg">
+                <em>工厂照片:</em>
+                <img src="images/addimg.png" class="addimg">
+                <img src="images/addimg.png" class="addimg">
+                <input type="file" style="display:none" id="file">
+            </p>
+            <p class="jyzk"><em>目前经营情况:</em><textarea placeholder="请输入目前经营情况"></textarea></p>
+        </div>
+    </div>
+    <!--<div class="infosubmit" onclick="infomation()"><a href="index.html">提交</a></div>-->
+    <div class="infosubmit" onclick="infomation()"><a href="javascript:void(0)">提交</a></div>
+</div>
+<div class="footer">
+    <h1>公司名称：达利（中国）有限公司</h1>
+    <h1>联系电话：400-888-8888</h1>
+    <h1>公司地址：杭州市萧山区钱农东路8号</h1>
+    <h1>Copyright © 2017 High Fashion Group.Built by</h1>
+    <img src="images/logo.png" alt="">
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/city-picker.data.js"></script>
+<script src="js/address.js"></script>
+<script src="js/redirect.js"></script>
+
+<script>
+    window.onload = function () {
+        $('.infomationtitle p:last').css({'padding-right':'0'});
+        $('.supplierclassify-info p').find('span').toggle(
+                function(){
+                    $(this).addClass('supplierclassify-infoactive');
+                },
+                function(){
+                    $(this).removeClass('supplierclassify-infoactive');
+                }
+        );
+    };
+    function infomation() {
+        var designerinfo = $('.designerinfo p');
+        var brand = designerinfo.eq(0).find('input').val();
+        //获取选中的风格种类;
+        var typeid = $('.supplierclassify-info .designer-tip').find('.supplierclassify-infoactive');
+        var typeidarr = [];
+        for (var i=0;i<typeid.size();i++) {
+            var objarr = $('.supplierclassify-info .designer-tip .supplierclassify-infoactive').eq(i).html();
+            typeidarr.push(objarr);
+        }
+        var tip_id = typeidarr.join(",");
+//        品牌价格及定位描述
+        var brand_intro = designerinfo.eq(2).find('textarea').val();
+        //详细地址
+        var address = $('.supplierclassify-classify .address').val();
+        var provinceValue = $('.province option:selected').text();
+        var cityValue = $('.city option:selected').text();
+        var areaValue = $('.area option:selected').text();
+        var region = provinceValue + cityValue + areaValue;
+        var areaID = getKeyOfValue(areaDictionary,areaValue);
+
+//       ***************************公司信息部分************************************
+
+        var company = $('.companyinfo .companyinfo-contact p');
+        var contact = company.eq(0).find('input').val();
+        var telphone = company.eq(1).find('input').val();
+        var email = company.eq(2).find('input').val();
+        var tax_qualification ='';
+        if ($('.tax-qualification p').eq(0).find('em').hasClass('supplierclassify-radiochecked')){
+            tax_qualification = 0
+        } else{
+            tax_qualification = 1
+        }
+        var companyinfo_tax = $('.companyinfo-tax p');
+        var taxnumber = companyinfo_tax.eq(0).find('input').val();
+        var taxrebate = companyinfo_tax.eq(1).find('input').val();
+        var taxcert = companyinfo_tax.eq(2).find('input').val();
+        var sale_info = $('.jyzk').find('textarea').val();
+        var cert_no = $('.cert-no').find('input').val();
+        var myData = {
+            "APPUSER_ID":"1",
+            "ADDRESS": address,
+            "BRAND": brand,
+            "BRAND_INTRO": brand_intro,
+            "BRAND_LOGO": "1.png",
+            "CATEGORY": "2",
+            "CERT": taxcert,
+            "CERT_NO": cert_no,
+            "CERT_PIC": "1.png",
+            "CONTRACT": contact,
+            "EMAIL": email,
+            "LIMIT": "2020-09-10",
+            "NUMBER": taxnumber,
+            "REBATE": taxrebate,
+            "REGION": region,
+            "REGION_ID": areaID,
+            "SALE_INFO": sale_info,
+            "TELPHONE": telphone,
+            "TIP_ID": tip_id,
+            "TYPE": tax_qualification
+        };
+        myrequest("app_user/finish.do",{"CATEGORY":"2"},myData,true,function(json){
+            show_alert(json.desc);
+
+        });
+    }
+</script>
+</body>
+
+</html>

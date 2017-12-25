@@ -1,0 +1,62 @@
+body{background: url("../images/logoinbg1.png") no-repeat;background-size: 100% 100%;width: 100%;overflow: hidden}
+.logoin{width: 268px;height: 425px;margin: auto;position: fixed;left: 0;right: 0;top: 0;bottom: 0;border: 1px solid #ffffff;border-radius: 3px;}
+.logoin h1{line-height: 50px;color: #e8c574;text-align: center;margin-top: 90px;font-size: 20px;}
+.logoinone{border-bottom: 1px solid #ffffff;width: 180px;margin: auto;padding-left: 30px;margin-bottom: 20px;}
+.logoin-phone{background: url("../images/phone.png") no-repeat left center;background-size: 14px 20px;}
+.logoin-password{background: url("../images/password.png") no-repeat left center;background-size: 14px 16px;}
+.logoinone input{line-height: 30px;background: none;background: rgba(255,255,255,0);color: #f2f2f2}
+.logoinone input::-webkit-input-placeholder { /* WebKit browsers */  color:#999; }
+.logoinone input::-moz-placeholder { /* Mozilla Firefox 4 to 18 */  color:#999;  }
+.logoinone input::-moz-placeholder { /* Mozilla Firefox 19+ */ color:#999;  }
+.logoinone input:-ms-input-placeholder { /* Internet Explorer 10+ */ color:#999;  }
+.logoin-in{background: #e8c574;color: #ffffff;text-align: center;width: 150px;margin: auto;border-radius: 30px;line-height: 30px;font-size: 14px}
+.logoin-register{border: 1px solid #E8C574;border-radius: 30px;color: #E8C574;text-align: center;line-height: 30px;width: 148px;margin:10px auto;font-size: 14px}
+.logoin-register a{color: #E8C574;}
+.logoin-in a{
+    color: #ffffff;
+}
+/*注册*/
+.logoin-test{background: url("../images/test.png") no-repeat left center;background-size: 14px 16px;}
+.logoin-invite{background: url("../images/invite.png") no-repeat left center;background-size: 14px 14px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
+
+
+

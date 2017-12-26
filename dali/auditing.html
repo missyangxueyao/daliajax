@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>企业资料</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<style>
+    .lifirst a{background: url("images/homepage10.png") no-repeat left center;background-size: 52px 14px;}
+</style>
+<body>
+<div class="header">
+    <div class="header-main">
+        <!--<img src="images/logo.png">-->
+        <h1><a href="index.html"></a></h1>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="homepage.html">管理中心</a></li>
+        </ul>
+        <p>MARU服装</p>
+    </div>
+</div>
+<p class="head-fg"></p>
+<div class="layout infomationreview companyinfo-main">
+    <div class="infomationtitle">
+        <p class="infomationtitle-active"><span>1</span><em>完善资料</em></p>
+        <p class="infomationtitle-active"><span>2</span><em>审核中</em></p>
+        <p><span>3</span><em>审核成功</em></p>
+    </div>
+    <div class="supplierclassify supplierclassify-one">
+        <h1>账号资料</h1>
+        <div class="supplierclassify-info infomationreview-left">
+            <p><em>供应商分类:</em> OMD工厂</p>
+            <p>
+                <em>经营品类:</em>
+                <span class="supplierclassify-infoactive">女装</span>
+                <span class="supplierclassify-infoactive">男装</span>
+            </p>
+            <p>
+                <em>服装品牌:</em>
+                <span class="supplierclassify-infoactive">QLO</span>
+                <span class="supplierclassify-infoactive">UNIQLO</span>
+            </p>
+            <p><em>详细地址:</em>钱农东路30号3-1</p>
+        </div>
+        <div class="supplierclassify-info infomationreview-right">
+            <p><em>生产规模:</em>1000人</p>
+            <p><em>所在地区:</em>浙江省 - 杭州市 - 萧山区</p>
+        </div>
+    </div>
+    <div class="companyinfo supplierclassify-one">
+        <h1>公司信息</h1>
+        <div class="supplierclassify-onetop">
+            <div class="supplierclassify-info infomationreview-left">
+                <p><em>公司联系人:</em>李丽</p>
+                <p><em>联系人邮箱:</em>lili@163.com</p>
+                <p><em>纳税编号:</em>4009938838476283746</p>
+                <p><em>营业执照名称:</em>杭州xxx有限公司</p>
+            </div>
+            <div class="supplierclassify-info infomationreview-right">
+                <p><em>联系电话:</em>15668085727</p>
+                <p><em>纳税资格:</em><i></i>一般纳税人</p>
+                <p><em>纳税税率:</em>17%</p>
+                <p><em>营业执照有效期:</em> 2019 - 09 - 20</p>
+            </div>
+        </div>
+        <div class="supplierclassify-info supplierclassify-infoimg">
+            <p><em>营业执照号:</em><img src="images/logoinbg.png"></p>
+            <p>
+                <em>工厂照片:</em>
+                <img src="images/logoinbg.png" >
+                <img src="images/logoinbg.png" >
+                <img src="images/logoinbg.png" >
+            </p>
+        </div>
+    </div>
+    <div class="infosubmit"><a href="javascript:void(0)">再次编辑</a></div>
+
+</div>
+<div class="footer">
+    <h1>公司名称：达利（中国）有限公司</h1>
+    <h1>联系电话：400-888-8888</h1>
+    <h1>公司地址：杭州市萧山区钱农东路8号</h1>
+    <h1>Copyright © 2017 High Fashion Group.Built by</h1>
+    <img src="images/logo.png" alt="">
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script>
+    window.onload = function () {
+        $('.infomationtitle p:last').css({'padding-right':'0'});
+        var a = $('.infomationreview .infomationreview-left p');
+        for (var i=0;i<a.size();i++){
+            var infoh = a.eq(i).height();
+            a.eq(i).find('em').css('height',infoh+'px');
+            console.info(a.eq(i).find('em').height())
+        }
+    }
+</script>
+</body>
+
+</html>

@@ -23,7 +23,7 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
     padding-left: 70px;
     background: url("../images/head.png") no-repeat left center;
     background-size: 60px 60px;
-    width: 79px;
+    /*width: 79px;*/
     line-height: 100px;
     color: #ffffff;
 }

@@ -12,6 +12,7 @@ var API_SERVICE_IMAGE_URL = "http://121.199.8.244:8880/";
  * POST请求
  *
  * @param url 前缀
+ * @param headers
  * @param data 参数字典
  * @param isUser 是否是用户操作true/false
  * @param successFunction  成功回调

@@ -31,7 +31,7 @@
     </div>
     <div class="auditingState">
         <h1>审核状态</h1>
-        <h2><span>审核状态:</span>审核中</h2>
+        <h2><span>审核状态:</span><!--审核中--></h2>
     </div>
     <div class="supplierclassify supplierclassify-one">
         <h1>账号资料</h1>
@@ -79,7 +79,7 @@
             </p>
         </div>
     </div>
-    <div class="infosubmit"><a href="infomation.html">再次编辑</a></div>
+    <div class="infosubmit"><a href="javascript:void(0)">再次编辑</a></div>
 
 </div>
 <div class="footer">
@@ -101,11 +101,14 @@
             var infoh = a.eq(i).height();
             a.eq(i).find('em').css('height',infoh+'px');
         }
-    };
-    var myData={
+        $('.auditingState h2').append(["未审核","审核中","审核成功","审核失败"][sessionStorage.getItem("VERIFY")]);
+        $('.infosubmit a').attr(["infomation.html","designerinfo.html","brandinfo.html"][sessionStorage.getItem("CATEGORY")]);
 
     };
-    myrequest("app_user/get.do",null,myData,true,function(json){
+
+
+
+    myrequest("app_user/get.do",null,null,true,function(json){
         if (json.response == 0) {
             var result = json.data;
             var objleft = $('.supplierclassify .infomationreview-left p');

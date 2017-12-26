@@ -5,115 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-<div class="dialog_teachermanage" id="addDialog" style="width:923px; display:block" >
-    <div class="dialog_title" data-operateType="add"></div>
-    <form id="formId" method="post" enctype="multipart/form-data">
-        <div class="dialog_body">
-            <div class="left">
-
-                <!-- 上传头像  ajax提交  class="hide"  -->
-                <div class="head_photo">
-                    <input type="button" id="head_pic_btn" value="点击上传头像" />
-                    <img src="${ctx}/static/images/common/head_default.jpg" data-img="head_default.jpg" width="180px" height="210px" id="head_img" />
-                </div>
-
-                <!-- 上传头像  form提交  -->
-                <!--
-                <div class="tphoto" name="head_img" id="head_img">
-                  <input type="file" name="file" id="file" onchange="previewImage(this)" />
-                  <div id="preview">
-                      <img id="imghead" border="1" width="100px;" heigh="100px;" src='${ctx}/static/images/common/head_default.jpg'>
-                  </div>
-                </div>
-                 -->
-
-                <div class="clear" style="height:30px;"></div>
-                <!-- 隐藏的标签查询、输入框 -->
-                <div class="addsign" id="addCourse">
-                    <div class="tagdiv">
-                        <a class="addtag"><i class='iconfont'>&#xe623;</i>添加标签</a>
-                        <div class="taginput clearfix">
-                            <input class="form-control" id="tagName" type="text" />
-                            <i class="iconfont ok" id="addtag-ok">&#xe626;</i>
-                            <i class="iconfont cancel" id="addtag-cancel">&#xe627;</i>
-                        </div>
-                    </div>
-                </div>
-                <ul class="singul labels" name="labels" id="labels"></ul>
-            </div>
-
-            <div class="right">
-                <input type="hidden" id="id">
-                <div class="right_tinput">
-                    <span class="t_span">姓名</span>
-                    <input type="text" name="name" id="name" data-rule="required;length[1~30]" data-tip="30字以内"/>
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">头衔</span>
-                    <input type="text" name="title" id="title" data-rule="length[0~30]" data-tip="30字以内"/>
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">电话</span>
-                    <input type="text" name="phone" id="phone"  data-rule="mobile"  data-rule-mobile="[/^1[3458]\d{9}$/, '请检查手机号格式']" />
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">邮箱地址</span>
-                    <input type="text" name="email" id="email" data-rule="email;length[0~50];"/>
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">讲师类型</span>
-                    <select id="trainerTypeId_add"  name="trainerTypeId" placeholder="请选择"/></select>
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">专业领域</span>
-                    <textarea  cols="46" rows="5" placeholder="限200字" name="proField" id="proField" data-rule="length[0~200]"></textarea>
-                </div>
-                <div class="right_tinput">
-                    <span class="t_span">简介</span>
-                    <textarea cols="46" rows="5" placeholder="限200字" name="intro" id="intro" data-rule="length[0~200]"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="dialog_bottom">
-            <div class="buttons">
-                <button type="button" id="cancel">取消</button>
-                <button type="submit" >保存</button>
-            </div>
-        </div>
-    </form>
-</div>
-<!-- 弹窗  结束  -->
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/jquery.upload.js"></script>
 
 
+<button onclick="uploadImage()">图片上传</button>
 
-<script>
-    $(function(){
 
-        function uploadImage(obj) {
-            $.uploadOne({
-                url : rootUrl + "app_pic/upload.do?DIR=user&APPUSER_ID="+appUserId+"&Cut=0"+"&width=&height=",
-                fileName : "PIC",
-                dataType : "json",
-                onSend : function () {
-                    return true;
-                },
-                onComplate : function (data) {
-                    if (data.response == "0") {
-                        $("#myLogoVal").val(data.data);
-                        $("#myLogo").attr('src',imagesUrl+data.data);
-                        loadMsg('success','图片上传成功！');
-                    } else {
-                        loadMsg('alert',data.desc);
-                    }
-                }
-            });
-        }
-
-    });
-</script>
 
 </body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.upload.js"></script>
+<script>
+    //    $(function(){
+
+    function uploadImage() {
+        $.uploadOne({
+            url : "http://121.199.8.244:8880/ELC/" + "app_pic/upload.do?DIR=user&APPUSER_ID="+"9"+"&Cut=0"+"&width=&height=",
+            fileName : "PIC",
+            dataType : "json",
+            onSend : function () {
+                return true;
+            },
+            onComplate : function (data) {
+                console.log(data);
+                if (data.response == "0") {
+//                        $("#myLogoVal").val(data.data);
+//                        $("#myLogo").attr('src',imagesUrl+data.data);
+//                        loadMsg('success','图片上传成功！');
+                } else {
+//                        loadMsg('alert',data.desc);
+                }
+            }
+        });
+    }
+
+    //    });
+</script>
 </html>

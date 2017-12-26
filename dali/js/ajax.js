@@ -72,6 +72,36 @@ function myrequest(url,headers,data,isUser,successFunction,successErrorFunction,
     });
 
 }
+
+
+/**
+ * 上传图片
+ *
+ * @param successFunction  成功回调
+ * @param failureFunction 失败回调
+ * */
+function uploadImage(successFunction,failureFunction){
+    $.uploadOne({
+        url : API_SERVICE_URL + "app_pic/upload.do?DIR=user&Cut=0&APPUSER_ID="+sessionStorage.getItem("APPUSER_ID"),
+        fileName : "PIC",
+        dataType : "json",
+        onSend : function () {
+            return true;
+        },
+        onComplate : function (json) {
+            if (data.response == "0") {
+                //成功
+                if (successFunction == null) { return false; }
+                successFunction(json);
+            } else {
+                //失败
+                if (failureFunction == null) { return false; }
+                failureFunction(json);
+            }
+        }
+    });
+}
+
 /**
  * 将字典转换为字符串
  *

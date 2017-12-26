@@ -12,10 +12,10 @@
 <div class="logoin">
     <h1>登录</h1>
     <div class="logoinone logoin-phone">
-        <input type="text" placeholder="请输入手机号码">
+        <input type="text" placeholder="请输入手机号码" value="15668085722">
     </div>
     <div class="logoinone logoin-password">
-        <input type="password" placeholder="请输入密码">
+        <input type="password" placeholder="请输入密码" value="123456">
     </div>
     <div class="logoin-in" onclick="login()"><a href="javascript:void (0)">登录</a></div>
     <div class="logoin-register"><a href="register.html">立即注册</a></div>
@@ -45,6 +45,12 @@
                 var result = json.data;
                 //将用户id存储到session中
                 sessionStorage.setItem("APPUSER_ID",json.data.APPUSER_ID);
+                //类别 0:ODM工厂 1:设计师工作室 2:独立品牌设计师
+                sessionStorage.setItem("CATEGORY",json.data.CATEGORY);
+                //验证状态 0:未审核 1:审核中 2:审核通过 3:审核失败
+                sessionStorage.setItem("VERIFY",json.data.VERIFY);
+                //是否完善过资料 0:否 ,1:是
+                sessionStorage.setItem("FINISH",json.data.FINISH);
 //                判断是否完善资料
                 if (result.FINISH == 0) {
                     window.location.href = 'infomation.html';

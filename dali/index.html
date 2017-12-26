@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>首页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/infomationreview.css">
     <script src="js/jquery-1.8.3.min.js"></script>
 </head>
+<style>
+    .pagination-box{
+        text-align: center !important;
+    }
+    .pagination>li{
+        display: inline-block !important;
+    }
+</style>
 <body>
 <div class="header">
     <div class="header-main">
@@ -36,6 +45,9 @@
         <!--</div>-->
     <!--</div>-->
 </div>
+<div class="pagination-box">
+    <ul id="demo" class="pagination" style="text-align: center !important;margin: 20px auto !important;"></ul>
+</div>
 <!--<p style="height: 200px;"></p>-->
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
@@ -49,114 +61,63 @@
 <script src="js/showalert.js"></script>
 <script src="js/md5.js"></script>
 <script src="js/ajax.js"></script>
+<script src="js/jqPaginator.js"></script>
 <script>
-    var myData = {
-        "PAGE": "0"
+
+
+    window.onload = function() {
+      requestData();
     };
 
+    function requestData() {
+        myrequest("app_meet/findPage.do",null,{"PAGE": "0"},true,function(json){
 
-    myrequest("app_meet/findPage.do",null,myData,true,function(json){
-        if (json.response == 0) {
-            var result = json.data;
-            for (var i=0;i<result.length;i++){
-                var sign = result[i].sign;
-                var isSign = '';
-                var isHref = '';
-                if (sign == 'true'){
-                    isSign='报名';
-                    isHref = 'goodsinfomation.html'
-                } else{
-                    isSign='报名结束';
-                    isHref = 'javascript:void(0)'
+            $('#demo').jqPaginator({
+//                totalCounts:json.total,
+                totalCounts:200,
+                pageSize:10,
+                visiblePages: 10,
+                currentPage: 1,
+                onPageChange: function (num, type) {
+                    myrequest("app_meet/findPage.do",null,{"PAGE":num-1},true,function(json){
+                        $('.bodymain').html('');
+                        var result = json.data;
+                        for (var i=0;i<result.length;i++){
+                            var sign = result[i].sign;
+                            var isSign = '';
+                            var isHref = '';
+                            if (sign == 'true'){
+                                isSign='报名';
+                                isHref = 'goodsinfomation.html'
+                            } else{
+                                isSign='报名结束';
+                                isHref = 'javascript:void(0)'
+                            }
+                            var list = '<div class="indexlist">' +
+                                    '<img src="'+API_SERVICE_IMAGE_URL+result[i].LOGO+'">' +
+                                    '<div class="indexlisttext">' +
+                                    '<h1>'+result[i].MEET_NAME+'</h1>' +
+                                    '<p>开启时间：'+result[i].BEGINETIME+'</p>' +
+                                    '<ul>' +
+                                    '<li>'+result[i].TYPE_NAME+'</li>' +
+                                    '<li>价位区间：'+result[i].PRICE_AREA+'</li>' +
+                                    '<li>地址：'+result[i].ADDRESS+'</li>' +
+                                    '</ul>' +
+                                    '<div class="indexlistbtn">' +
+                                        //                        '<a href="goodsinfomation.html">'+isSign+'</a>' +
+                                    '<a href="'+isHref+'" data-id="'+isSign+'">'+isSign+'</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            $('.bodymain').append(list);
+                        }
+                        $('a[data-id="报名结束"]').parent().addClass('indexlistbtnover');
+                    });
+
                 }
-                var list = '<div class="indexlist">' +
-                        '<img src="'+API_SERVICE_IMAGE_URL+result[i].LOGO+'">' +
-                        '<div class="indexlisttext">' +
-                        '<h1>'+result[i].MEET_NAME+'</h1>' +
-                        '<p>开启时间：'+result[i].BEGINETIME+'</p>' +
-                        '<ul>' +
-                        '<li>'+result[i].TYPE_NAME+'</li>' +
-                        '<li>价位区间：'+result[i].PRICE_AREA+'</li>' +
-                        '<li>地址：'+result[i].ADDRESS+'</li>' +
-                        '</ul>' +
-                        '<div class="indexlistbtn">' +
-//                        '<a href="goodsinfomation.html">'+isSign+'</a>' +
-                        '<a href="'+isHref+'" data-id="'+isSign+'">'+isSign+'</a>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                $('.bodymain').append(list);
-            }
-            $('a[data-id="报名结束"]').parent().addClass('indexlistbtnover');
-        }
-
-    });
-
-
-
-
-//
-//    $.ajax({
-//        type: 'post',
-//        url: allurl + '/everBetterService/aboutUsNews/getList.do',
-//        data: {
-//            typeId: id,
-//            page:0,
-//            count:10
-//        },
-//        dataType:'JSON',
-//        success:function (data) {
-//            $('#demo').jqPaginator({
-//                totalCounts:data.total,
-//                pageSize:10,
-//                visiblePages: 10,
-//                currentPage: 1,
-//                onPageChange: function (num, type) {
-//                    $.ajax({
-//                        url: allurl+'/everBetterService/aboutUsNews/getList.do',
-//                        data:{
-//                            typeId: id,
-//                            page:num-1,
-//                            count:10
-//                        },
-//                        dataType:'JSON',
-//                        type:'get',
-//                        success: function (data) {
-//                            if (data.response == 0) {
-//                                var result = data.data;
-//                                if (result.length > 0) {
-//                                    $('.aboutus-newsall').html('');
-//                                    for (var i = 0; i < result.length; i++) {
-//                                        var pinjiehtml = '<div class="hospitalnews-list" data-n="'+result[i].id+'"> ' +
-//                                                '<img src="'+allurl+result[i].logo+'"> ' +
-//                                                '<div class="hospitalnews-listright"> ' +
-//                                                '<h1>'+result[i].name+'<span>'+result[i].createTime+'</span></h1> ' +
-//                                                '<p>'+result[i].descInfo+'</p> ' +
-//                                                '<a href="hospitalnewsdetail.html?id='+result[i].id+'">查看更多 > </a> ' +
-//                                                '</div> ' +
-//                                                '</div>';
-//                                        // $('.aboutus-news').append(pinjiehtml);
-//                                        $('.aboutus-newsall').append(pinjiehtml);
-//                                    }
-//
-//                                    $('.hospitalnews-list').click(function(){
-//                                        window.location.href="hospitalnewsdetail.html?id="+$(this).attr('data-n');
-//                                    });
-//                                    $('.hospitalnews-list:last').css('border-bottom','none');
-//                                }
-//                            }
-//                        }
-//                    })
-//                }
-//            });
-//        }
-//    });
-
-
-
-
-
-
+            });
+        });
+    }
 
 
 </script>

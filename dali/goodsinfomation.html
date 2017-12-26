@@ -27,20 +27,15 @@
     <p><em>商品名称：</em><input type="text" placeholder="请输入商品名称"></p>
     <p class="jiJie"><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
     <p><em>大类：</em>
-        <select name="">
+        <select name="" id="dalei1" onchange="selectDaLei(this.value);">
             <option value="">请选择</option>
         </select>
-        <select name="">
-            <option value="">请选择</option>
-        </select>
-    </p>
-    <p><em>款型：</em>
-        <select name="">
+        <select name="" id="dalei2">
             <option value="">请选择</option>
         </select>
     </p>
     <p><em>款式定位：</em>
-        <select name="">
+        <select name="" id="kuanshi">
             <option value="">请选择</option>
         </select>
     </p>
@@ -50,19 +45,9 @@
             <option value=""> 女 </option>
         </select>
     </p>
-    <p><em>货品：</em>
-        <select name="">
-            <option value="">成衣 </option>
-        </select>
-    </p>
-    <p><em>SKU：</em>
-        <select name="">
-            <option value="">请选择</option>
-        </select>
-    </p>
     <p><em>系列：</em>
-        <select name="">
-            <option value="">THE.ME-al</option>
+        <select name="" id="xilie">
+            <option value="">请选择</option>
         </select>
     </p>
     <p class="emtext">
@@ -151,7 +136,7 @@
     </p>
     <p>
         <em>货期：</em>
-        <select name="">
+        <select name="" id="huoqi">
             <option value="">请选择</option>
         </select>
     </p>
@@ -174,10 +159,6 @@
         <em>起订量：</em>
         <input type="text" placeholder="请输入起订量">
     </p>
-    <p>
-        <em>货期：</em>
-        <input type="text" placeholder="请输入货期">
-    </p>
 </div>
 <div class="infosubmit"><a href="goodssubmit.html">提交</a></div>
 <div class="footer">
@@ -189,8 +170,12 @@
 </div>
 
 <script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
 <script src="js/jquery-1.8.3.min.js"></script>
 <script>
+    var daLei = {};
+
 new function () {
     var param = get_param();
     if (!param.MEET_ID) {
@@ -203,6 +188,51 @@ new function () {
     $('.goodsinfomation p strong').click(function () {
         $(this).addClass('goodsinfomation-radiochecked').siblings().removeClass('goodsinfomation-radiochecked')
     });
+
+    myrequest('app_type/findAll.do', null, {
+        APPUSER_ID: sessionStorage.APPUSER_ID
+    }, true, function (json) {
+        //系列
+        var xilie = '';
+        $.each(json.data1, function (i, v) {
+            xilie += '<option value="' + v.SERIES_NAME + '">' + v.SERIES_NAME + '</option>';
+        });
+        $("#xilie").html(xilie);
+        //货期
+        var huoqi = '';
+        $.each(json.data2, function (i, v) {
+            huoqi += '<option value="' + v.DAY + '">'+v.DAY+'</option>';
+        });
+        $("#huoqi").html(huoqi);
+        //款式定位
+        var kuanshi = '';
+        $.each(json.data3, function (i, v) {
+            kuanshi += '<option value="'+v.POSITION+'">'+v.POSITION+'</option>';
+        });
+        $("#kuanshi").html(kuanshi);
+        //大类
+        daLei = json.data;
+        var daLei1Html = '';
+        var daLei2Html = ''
+        $.each(daLei, function (i, v) {
+            daLei1Html += '<option value="'+i+'">'+v.TYPE_NAME+'</option>';
+            if (i === 0 && v.type_detailList.length > 0) {
+                $.each(v.type_detailList, function (k, val) {
+                    if (val.DETAIL_NAME) {
+                        daLei2Html += '<option value="' + v.TYPE_NAME + ',' + val.DETAIL_NAME + '">'+val.DETAIL_NAME+'</option>'
+                    } else {
+                        daLei2Html += '<option value="' + v.TYPE_NAME + '"></option>'
+                    }
+                });
+                $("#dalei2").html(daLei2Html);
+            } else if (i === 0) {
+                daLei2Html = '<option value="' + v.TYPE_NAME + '"></option>'
+                $("#dalei2").html(daLei2Html);
+            }
+            $("#dalei1").html(daLei1Html);
+        });
+    })
+};
 
     function addGuiGe() {
         var html = '<p>' +
@@ -222,12 +252,24 @@ new function () {
         }
         obj.parent().remove();
     }
-    myrequest('app_type/findUserAll.do', null, {
-        APPUSER_ID: sessionStorage.APPUSER_ID
-    }, true, function (json) {
 
-    })
-};
+    function selectDaLei(key) {
+        var data = daLei[key].type_detailList;
+        var daLei2Html = '';
+        if (data.length > 0) {
+            $.each(data, function (k, val) {
+                if (val.DETAIL_NAME) {
+                    daLei2Html += '<option value="' + daLei[key].TYPE_NAME + ',' + val.DETAIL_NAME + '">'+val.DETAIL_NAME+'</option>'
+                } else {
+                    daLei2Html += '<option value="' + daLei[key].TYPE_NAME + '"></option>'
+                }
+            });
+            $("#dalei2").html(daLei2Html);
+        } else {
+            daLei2Html = '<option value="' + daLei[key].TYPE_NAME + '"></option>'
+            $("#dalei2").html(daLei2Html);
+        }
+    }
 </script>
 </body>
 

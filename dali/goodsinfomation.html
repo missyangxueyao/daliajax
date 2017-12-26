@@ -6,6 +6,7 @@
     <title>商品信息</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/goods.css">
 </head>
 <body>
 <div class="header">
@@ -24,7 +25,7 @@
     <p><em>款号：</em><input type="text" placeholder="请输入款号"></p>
     <p><em>货号：</em><input type="text" placeholder="请输入货号"></p>
     <p><em>商品名称：</em><input type="text" placeholder="请输入商品名称"></p>
-    <p><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
+    <p class="jiJie"><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
     <p><em>大类：</em>
         <select name="">
             <option value="">请选择</option>
@@ -68,7 +69,16 @@
         <em>商品介绍：</em>
         <textarea name="" placeholder="请输入商品介绍"></textarea>
     </p>
-    <p>
+
+    <div id="guiGe">
+        <p>
+            <em>尺码：</em><input type="text"/>
+            <em>颜色：</em><input type="text"/>
+            <em>价格：</em><input type="text"/>
+            <i onclick="addGuiGe()"></i><i class="del" onclick="deleteGuiGe(this);"></i>
+        </p>
+    </div>
+    <!--<p>
         <em>尺码：</em>
         <strong>s</strong>
         <strong>m</strong>
@@ -83,7 +93,7 @@
         <span class="spanactive">白色 <input type="text" placeholder="请输入价格"></span>
         <span class="spanactive">黑色 <input type="text" placeholder="请输入价格"></span>
         <span class="addspan">+ 添加</span>
-    </p>
+    </p>-->
     <p class="emtext">
         <em>成分：</em>
         <textarea name="" placeholder="例：成分：53.5%锦纶 28.0%粘纤 18.7%棉 里料：96%聚酯纤维 4%氨纶"></textarea>
@@ -93,28 +103,44 @@
         <em>面料价格：</em>
         <input type="text" placeholder="请输入面料价格">
         <select name="">
-            <option value="">RMB</option>
+            <option value="RMB">RMB</option>
+            <option value="美元">美元</option>
+            <option value="日元">日元</option>
+            <option value="欧元">欧元</option>
+            <option value="韩元">韩元</option>
         </select>
     </p>
     <p>
         <em>辅料价格：</em>
         <input type="text" placeholder="请输入辅料价格">
         <select name="">
-            <option value="">美元</option>
+            <option value="RMB">RMB</option>
+            <option value="美元">美元</option>
+            <option value="日元">日元</option>
+            <option value="欧元">欧元</option>
+            <option value="韩元">韩元</option>
         </select>
     </p>
     <p>
         <em>工价：</em>
         <input type="text" placeholder="请输入工价">
         <select name="">
-            <option value="">日元</option>
+            <option value="RMB">RMB</option>
+            <option value="美元">美元</option>
+            <option value="日元">日元</option>
+            <option value="欧元">欧元</option>
+            <option value="韩元">韩元</option>
         </select>
     </p>
     <p>
         <em>其他价格(选填)：</em>
         <input type="text" placeholder="请输入面料价格">
         <select name="">
-            <option value="">欧元</option>
+            <option value="RMB">RMB</option>
+            <option value="美元">美元</option>
+            <option value="日元">日元</option>
+            <option value="欧元">欧元</option>
+            <option value="韩元">韩元</option>
         </select>
     </p>
     <p class="istax">
@@ -141,6 +167,8 @@
         <img src="images/addimg.png" alt="">
         <img src="images/addimg.png" alt="">
         <img src="images/addimg.png" alt="">
+        <img src="images/addimg.png" alt="">
+        <img src="images/addimg.png" alt="">
     </p>
     <p>
         <em>起订量：</em>
@@ -159,16 +187,47 @@
     <h1>Copyright © 2017 High Fashion Group.Built by</h1>
     <img src="images/logo.png" alt="">
 </div>
+
+<script src="js/showalert.js"></script>
 <script src="js/jquery-1.8.3.min.js"></script>
 <script>
-    window.onload = function () {
-        $('.goodsinfomation p span').click(function(){
-            $(this).addClass('spanactive');
-        });
-        $('.goodsinfomation p strong').click(function(){
-            $(this).addClass('goodsinfomation-radiochecked').siblings().removeClass('goodsinfomation-radiochecked')
-        })
+new function () {
+    var param = get_param();
+    if (!param.MEET_ID) {
+        history.back();
+        return;
     }
+    $('.goodsinfomation p.jiJie span').click(function () {
+        $(this).addClass('spanactive').siblings().removeClass("spanactive");
+    });
+    $('.goodsinfomation p strong').click(function () {
+        $(this).addClass('goodsinfomation-radiochecked').siblings().removeClass('goodsinfomation-radiochecked')
+    });
+
+    function addGuiGe() {
+        var html = '<p>' +
+            '            <em>尺码：</em><input type="text"/>' +
+            '            <em>颜色：</em><input type="text"/>' +
+            '            <em>价格：</em><input type="text"/>' +
+            '            <i onclick="addGuiGe()"></i><i class="del" onclick="deleteGuiGe(this);"></i>' +
+            '        </p>';
+        $("#guiGe").append(html);
+    }
+
+    function deleteGuiGe(obj) {
+        obj = $(obj);
+        if ($("#guiGe p").length <= 1) {
+            show_alert("请至少保留一个");
+            return;
+        }
+        obj.parent().remove();
+    }
+    myrequest('app_type/findUserAll.do', null, {
+        APPUSER_ID: sessionStorage.APPUSER_ID
+    }, true, function (json) {
+
+    })
+};
 </script>
 </body>
 

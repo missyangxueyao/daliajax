@@ -26,8 +26,8 @@ function myrequest(url,headers,data,isUser,successFunction,successErrorFunction,
     //从session中获取用户id
     if (isUser == true) {
         data["APPUSER_ID"] = sessionStorage.getItem("APPUSER_ID");
-    }
 
+    }
     var sign = md5(createTime + sortOutData(data));
 
     var myData = {

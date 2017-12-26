@@ -19,6 +19,7 @@
     </div>
     <div class="logoin-in" onclick="login()"><a href="javascript:void (0)">登录</a></div>
     <div class="logoin-register"><a href="register.html">立即注册</a></div>
+    <div class="forget-password"><a href="#">忘记密码?</a></div>
 
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
@@ -40,10 +41,25 @@
             "PHONE":phone
         };
         myrequest("app_user/login.do",null,myData,false,function(json){
-            show_alert(json.desc);
-            //将用户id存储到session中
-            sessionStorage.setItem("APPUSER_ID",json.data.APPUSER_ID);
-            window.location.href = 'index.html';
+            if (json.response == 0) {
+                var result = json.data;
+                //将用户id存储到session中
+                sessionStorage.setItem("APPUSER_ID",json.data.APPUSER_ID);
+//                判断是否完善资料
+                if (result.FINISH == 0) {
+                    window.location.href = 'infomation.html';
+                } else{
+//                   判断是否审核通过
+                    if (result.VERIFY == 0 || result.VERIFY == 1 || result.VERIFY == 3){
+                        window.location.href = 'auditing.html';
+                    } else{
+                        window.location.href = 'index.html';
+                    }
+                }
+            } else{
+                show_alert(json.desc);
+            }
+
         });
     }
 

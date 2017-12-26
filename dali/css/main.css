@@ -778,6 +778,7 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
 }
  .goodstime h4{
     float: right;
+     line-height:30px;
 }
 .orderrevise-color{
     overflow: hidden;
@@ -934,6 +935,39 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
     margin: auto;
 }
 
+
+.auditingState{
+    background:#FFFFFF;
+    padding:10px 0;
+    width: 100%;
+    border-radius: 5px;
+}
+.auditingState h1{
+    color: #E8C574;
+    font-size: 16px;
+    line-height:30px;
+    margin-left:30px;
+}
+.auditingState h2{
+    color: #E8C574;
+    font-size: 16px;
+    line-height:50px;
+    margin-left:60px;
+}
+.auditingState h2 span{
+    font-size: 14px;
+    color: #666666;
+    margin-right:20px;
+}
+
+.forget-password{
+
+    text-align: center;
+}
+.forget-password a{
+    color: #FFFFFF;
+    font-size: 12px;
+}
 
 
 

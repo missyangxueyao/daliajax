@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>忘记密码</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/logoin.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+<div class="logoin">
+    <h1>注册</h1>
+    <div class="logoinone logoin-phone">
+        <input type="text" placeholder="请输入手机号码">
+    </div>
+    <div class="logoinone logoin-test">
+        <input type="text" placeholder="请输入验证码">
+        <span class="get_verify_btn" onclick="result()">获取验证码</span>
+    </div>
+    <div class="logoinone logoin-password">
+        <input type="password" placeholder="请设置新密码">
+    </div>
+    <div class="logoinone logoin-password">
+        <input type="password" placeholder="请确认密码">
+    </div>
+    <div class="logoin-in"><a href="logoin.html">确认修改</a></div>
+
+
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/publick.js"></script>
+
+<script>
+    window.onload = function () {
+        var bodyh = document.documentElement.clientHeight;
+        $('body').height(bodyh);
+    };
+    //    发送验证码接口
+    function result(){
+        var phone = $('.logoin-phone').find('input').val();
+        var createTime = getSysTime();
+        var sign = '';
+        var myStr = createTime+'{"PHONE":"'+phone+'"}';
+        sign = md5(myStr);
+
+        var myData = {
+            "createTime":createTime,
+            "data":{
+                "PHONE":phone
+            },
+            "sign":sign
+        };
+
+        $.ajax({
+            url: allurl+'/app_user/getCode.do',
+            type: 'post',
+            dataType: 'JSON',
+            contentType: "application/json",
+            data: JSON.stringify(myData),
+            timeout:0,
+            cache: false,
+            success: function (data) {
+                if(data.response==0){
+                    var obj = $(".get_verify_btn");
+                    if(obj.hasClass("no-click")){
+                        return false;
+                    }
+                    var mobile =  $('.logoin-phone').find('input').val();
+                    if(mobile.length != 11){
+                        show_alert("请输入正确的手机号");
+                        return false;
+                    }
+                    var i = 60;
+                    obj.addClass("no-click");
+                    var x = setInterval(function(){
+                        if(i > 0){
+                            i--;
+                            obj.html(i+"秒");
+                        }else{
+                            obj.removeClass("no-click");
+                            obj.html("获取验证码");
+                            clearInterval(x);
+                        }
+                    }, 1000);
+                    show_alert("验证码发送成功");
+                }else{
+                    show_alert(data.desc);
+                }
+
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

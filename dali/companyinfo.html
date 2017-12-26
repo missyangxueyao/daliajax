@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <style>
-    .lifirst a{background: url("images/homepage10.png") no-repeat left center;background-size: 52px 14px;}
+    .lithird a{background: url("images/homepage30.png") no-repeat left center;background-size: 80px 14px;}
 </style>
 <body>
 <div class="header">
@@ -37,47 +37,46 @@
     <div class="supplierclassify supplierclassify-one">
         <h1>企业资料</h1>
         <div class="supplierclassify-info infomationreview-left">
-            <p><em>供应商分类:</em> OMD工厂</p>
+            <p><em>供应商分类:</em> <!--OMD工厂--></p>
             <p>
                 <em>经营品类:</em>
-                <span class="supplierclassify-infoactive">女装</span>
-                <span class="supplierclassify-infoactive">男装</span>
+                <!--<span class="supplierclassify-infoactive">女装</span>-->
             </p>
             <p>
                 <em>服装品牌:</em>
-                <span class="supplierclassify-infoactive">QLO</span>
-                <span class="supplierclassify-infoactive">UNIQLO</span>
+                <!--<span class="supplierclassify-infoactive">QLO</span>-->
             </p>
-            <p><em>详细地址:</em>钱农东路30号3-1</p>
+            <p><em>详细地址:</em><!--钱农东路30号3-1--></p>
         </div>
         <div class="supplierclassify-info infomationreview-right">
-            <p><em>生产规模:</em>1000人</p>
-            <p><em>所在地区:</em>浙江省 - 杭州市 - 萧山区</p>
+            <p><em>生产规模:</em><!--1000人--></p>
+            <p><em>所在地区:</em><!--浙江省 - 杭州市 - 萧山区--></p>
         </div>
     </div>
     <div class="companyinfo supplierclassify-one">
         <h1>公司信息</h1>
         <div class="supplierclassify-onetop">
             <div class="supplierclassify-info infomationreview-left">
-                <p><em>公司联系人:</em>李丽</p>
-                <p><em>联系人邮箱:</em>lili@163.com</p>
-                <p><em>纳税编号:</em>4009938838476283746</p>
-                <p><em>营业执照名称:</em>杭州xxx有限公司</p>
+                <p><em>公司联系人:</em><!--李丽--></p>
+                <p><em>联系人邮箱:</em><!--lili@163.com--></p>
+                <p><em>纳税编号:</em><!--4009938838476283746--></p>
+                <p><em>营业执照名称:</em><!--杭州xxx有限公司--></p>
+                <p><em>营业执照号:</em><!--杭州xxx有限公司--></p>
             </div>
             <div class="supplierclassify-info infomationreview-right">
-                <p><em>联系电话:</em>15668085727</p>
-                <p><em>纳税资格:</em><i></i>一般纳税人</p>
-                <p><em>纳税税率:</em>17%</p>
-                <p><em>营业执照有效期:</em> 2019 - 09 - 20</p>
+                <p><em>联系电话:</em><!--15668085727--></p>
+                <p><em>纳税资格:</em><i></i><!--一般纳税人--></p>
+                <p><em>纳税税率:</em><!--17%--></p>
+                <p><em>营业执照有效期:</em> <!--2019 - 09 - 20--></p>
             </div>
         </div>
         <div class="supplierclassify-info supplierclassify-infoimg">
-            <p><em>营业执照号:</em><img src="images/logoinbg.png"></p>
-            <p>
+            <p class="supplierclassify-infoimgfirst"><em>营业执照照片:</em><!--<img src="images/logoinbg.png">--></p>
+            <p class="supplierclassify-infoimgsecond">
                 <em>工厂照片:</em>
-                <img src="images/logoinbg.png" >
-                <img src="images/logoinbg.png" >
-                <img src="images/logoinbg.png" >
+                <!--<img src="images/logoinbg.png" >-->
+                <!--<img src="images/logoinbg.png" >-->
+                <!--<img src="images/logoinbg.png" >-->
             </p>
         </div>
     </div>
@@ -90,6 +89,9 @@
     <img src="images/logo.png" alt="">
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
 <script>
     window.onload = function () {
         $('.infomationtitle p:last').css({'padding-right':'0'});
@@ -97,9 +99,48 @@
         for (var i=0;i<a.size();i++){
             var infoh = a.eq(i).height();
             a.eq(i).find('em').css('height',infoh+'px');
-            console.info(a.eq(i).find('em').height())
         }
-    }
+    };
+    var myData={
+
+    };
+    myrequest("app_user/get.do",null,myData,true,function(json){
+        if (json.response == 0) {
+            var result = json.data;
+            var objleft = $('.supplierclassify .infomationreview-left p');
+            var objright = $('.supplierclassify .infomationreview-right p');
+            objleft.eq(0).append(result.CATEGORY);
+            for (var i=0;i<result.typeList.length;i++){
+                var typeList = '<span class="supplierclassify-infoactive">'+result.typeList[i].TYPE_NAME+'</span>';
+                objleft.eq(1).append(typeList);
+            }
+            for (var i=0;i<result.serverList.length;i++){
+                var serverList = '<span class="supplierclassify-infoactive">'+result.serverList[i].SERVER_NAME+'</span>';
+                objleft.eq(2).append(serverList);
+            }
+            objleft.eq(3).append(result.ADDRESS);
+            objright.eq(0).append(result.SIZE);
+            objright.eq(1).append(result.REGION);
+        /********公司信息***********/
+            var infoobjleft = $('.companyinfo .infomationreview-left p');
+            var infoabjright = $('.companyinfo .infomationreview-right p');
+            infoobjleft.eq(0).append(result.CONTRACT);
+            infoobjleft.eq(1).append(result.EMAIL);
+            infoobjleft.eq(2).append(result.NUMBER);
+            infoobjleft.eq(3).append(result.CERT);
+            infoobjleft.eq(4).append(result.CERT_NO);
+            infoabjright.eq(0).append(result.TELPHONE);
+            infoabjright.eq(1).append(result.TYPE);
+            infoabjright.eq(2).append(result.REBATE);
+            infoabjright.eq(3).append(result.LIMIT);
+            $('.supplierclassify-infoimgfirst').append('<img src="'+API_SERVICE_IMAGE_URL+result.CERT_PIC+'"/>');
+            var IN_PICarr = result.IN_PIC.split(';');
+            for (var i=0;i<IN_PICarr.length;i++){
+                var imgs = '<img src="'+API_SERVICE_IMAGE_URL+IN_PICarr[i]+'"/>';
+                $('.supplierclassify-infoimgsecond').append(imgs)
+            }
+        }
+    });
 </script>
 </body>
 

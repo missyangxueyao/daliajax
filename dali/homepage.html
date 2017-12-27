@@ -35,12 +35,13 @@
     </div>
     <div class="homepagelist homepagegoods">
         <ul class="homepagelist-nav homepagelist-mainnav">
-            <li class="homepagenav-active">审核中</li>
-            <li>审核通过</li>
-            <li>审核未通过</li>
-            <li>待发货</li>
-            <li>已发货</li>
-            <li style="display: none">已退货</li>
+            <li class="homepagenav-active" data-status="0">全部</li>
+            <li data-status="1">审核中</li>
+            <li data-status="2">审核通过</li>
+            <li data-status="3">审核未通过</li>
+            <li data-status="4">待发货</li>
+            <li data-status="5">已发货</li>
+            <!--<li style="display: none">已退货</li>-->
         </ul>
         <!--审核中-->
         <div class="homepage-main" style="display: block">
@@ -59,7 +60,6 @@
                     季节：春夏 品类：大衣 起订量：单色3件 颜色：黑色、白色 尺寸：均码 面料：双面尼 风格：欧美 货期7-15天
                 </p>
             </div>
-            <div class="moregoods"><a href="moregoods.html">更多商品</a></div>
         </div>
         <!--审核通过-->
         <div class="homepage-main">
@@ -162,6 +162,7 @@
             </div>
         </div>
     </div>
+    <div class="moregoods"><a href="moregoods.html">更多商品</a></div>
     <div class="homepage-reviewing">
         <div class="homepagelist homepageorder">
             <ul class="homepagelist-nav">
@@ -203,16 +204,22 @@
     <img src="images/logo.png" alt="">
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/goodsList.js"></script>
 <script>
-    $('.homepagelist-mainnav li').click(function(){
-        $(this).addClass('homepagenav-active').siblings().removeClass('homepagenav-active');
-        $('.homepage-main').css('display','none').eq($(this).index()).css('display','block');
-        if ($(this).html()!= '审核中') {
-            $('.homepage-reviewing').css('display','none')
-        } else {
-            $('.homepage-reviewing').css('display','block')
+    getList(0, 0, 4);
+
+    $(".homepagelist-mainnav li").click(function (data) {
+        var _this = $(this);
+        if (_this.hasClass('homepagenav-active')) {
+            return;
         }
-    })
+        _this.addClass('homepagenav-active').siblings().removeClass('homepagenav-active');
+        var status = _this.attr('data-status');
+        getList(status, 0, 4);
+    });
 </script>
 </body>
 

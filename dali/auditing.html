@@ -102,7 +102,8 @@
             a.eq(i).find('em').css('height',infoh+'px');
         }
         $('.auditingState h2').append(["未审核","审核中","审核成功","审核失败"][sessionStorage.getItem("VERIFY")]);
-        $('.infosubmit a').attr(["infomation.html","designerinfo.html","brandinfo.html"][sessionStorage.getItem("CATEGORY")]);
+
+        $('.infosubmit a').attr( "href",["infomation.html","designerinfo.html","brandinfo.html"][sessionStorage.getItem("CATEGORY")]);
 
     };
 

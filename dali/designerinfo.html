@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>独立品牌完善资料</title>
+    <title>设计师工作室</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -27,15 +27,15 @@
         <div class="supplierclassify-radio supplierclassify-all">
             <strong>供应商分类:</strong>
             <p><input type="radio" name="supplier"><em onclick="redirect('infomation.html')"></em><span>ODM工厂</span></p>
-            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')" class="supplierclassify-radiochecked"></em><span>设计室工作室</span></p>
-            <p><input type="radio" name="supplier"><em  onclick="redirect('brandinfo.html')"></em><span>独立品牌设计师</span></p>
+            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')"  class="supplierclassify-radiochecked"></em><span>设计师工作室</span></p>
+            <p><input type="radio" name="supplier"><em onclick="redirect('brandinfo.html')"></em><span>独立品牌设计师</span></p>
         </div>
         <h1>基本信息</h1>
         <div>
             <!--独立品牌设计基本信息-->
             <div class="supplierclassify-classify">
                 <div class="supplierclassify-info">
-                    <p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称"></p>
+                    <p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称" class="brandname"></p>
                     <p class="designer-tip">
                         <em>风格:</em>
                         <!--<span>欧美</span>-->
@@ -46,7 +46,7 @@
                         <!--<span>淑女</span>-->
                         <!--<span>牛仔</span>-->
                     </p>
-                    <p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格"></textarea></p>
+                    <p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格" class="brand-price"></textarea></p>
                     <p>
                         <em>品牌商标注册图:</em>
                         <img src="images/addimg.png">
@@ -105,16 +105,17 @@
                 </select>
                 <strong>（年、月、日）</strong>
             </p>
-            <p>
+            <p class="cert-pic">
                 <em>营业执照照片:</em>
                 <img src="images/addimg.png" class="addimg">
                 <!--<input type="file" style="display:none">-->
             </p>
+            <!---->
             <p class="jyzk"><em>目前经营情况:</em><textarea placeholder="请输入目前经营情况"></textarea></p>
         </div>
     </div>
     <!--<div class="infosubmit" onclick="infomation()"><a href="index.html">提交</a></div>-->
-    <div class="infosubmit" onclick="infomation()"><a href="javascript:void(0)">提交</a></div>
+    <div class="infosubmit" onclick="infomation()"><a href="logoin.html">提交</a></div>
 </div>
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
@@ -146,6 +147,7 @@
                 }
         );
     };
+
     var mydata1 = {
 
     };
@@ -157,7 +159,6 @@
             }
         }
     });
-
     function infomation() {
         var designerinfo = $('.designerinfo p');
         var brand = designerinfo.eq(0).find('input').val();
@@ -179,8 +180,7 @@
         var region = provinceValue + cityValue + areaValue;
         var areaID = getKeyOfValue(areaDictionary,areaValue);
 
-//       ***************************公司信息部分************************************
-
+        /***************************公司信息部分************************************/
         var company = $('.companyinfo .companyinfo-contact p');
         var contact = company.eq(0).find('input').val();
         var telphone = company.eq(1).find('input').val();
@@ -224,6 +224,80 @@
 
         });
     }
+
+    //审核成功之前重新编辑
+    if (sessionStorage.getItem("VERIFY") == 0 && sessionStorage.getItem("CATEGORY") == 1 || sessionStorage.getItem("VERIFY") == 1 && sessionStorage.getItem("CATEGORY") == 1 || sessionStorage.getItem("VERIFY") ==3 && sessionStorage.getItem("CATEGORY") == 1){
+        againedit();
+    }
+    function againedit() {
+        var myData = {
+            "APPUSER_ID":"9"
+        };
+
+        myrequest("app_user/get.do",null,myData,true,function(json){
+            if (json.response == 0) {
+                var result = json.data;
+                var obj = $('.businesscategory span');
+                var typearr = [];
+                for (var i=0;i<result.typeList.length;i++){
+                    var typelist = '';
+                    typelist += result.typeList[i].TYPE_NAME;
+                    typearr.push(typelist);
+                }
+                var objstr = obj.text();
+                console.info(objstr);
+
+                var plist = $('.companyinfo-contact p');
+                $('.brandname').val(result.BRAND) ;//品牌名称
+                $('.brand-price').val(result.BRAND_INTRO);//品牌及价格定位
+                $('.address').val(result.ADDRESS);//详细地址
+                plist.eq(0).find('input').val(result.CONTRACT);//联系人
+                plist.eq(1).find('input').val(result.TELPHONE);//电话
+                plist.eq(2).find('input').val(result.EMAIL);//邮箱
+                if(result.TYPE == 0){
+                    $('.tax-qualification p').eq(0).find('em').addClass('supplierclassify-radiochecked') ;//纳税资格
+                } else {
+                    $('.tax-qualification p').eq(1).find('em').addClass('supplierclassify-radiochecked')
+                }
+                var taxlist = $('.companyinfo-tax p');
+                taxlist.eq(0).find('input').val(result.NUMBER);//纳税编号
+                taxlist.eq(1).find('input').val(result.REBATE);//纳税税率
+                taxlist.eq(2).find('input').val(result.CERT);//营业执照名称
+                taxlist.eq(4).find('input').val(result.CERT_NO);//营业执照编号
+                var IN_PIC = result.IN_PIC.split(';');
+                var CERT_PIC = result.CERT_PIC.split(';')
+                for(var i=0;i<IN_PIC.length;i++){
+                    $('.gongimg').append('<img src="'+API_SERVICE_IMAGE_URL+IN_PIC[i]+'"/>');//工厂照片
+                }
+                for(var i=0;i<CERT_PIC.length;i++){
+                    $('.cert-pic').append('<img src="'+API_SERVICE_IMAGE_URL+CERT_PIC[i]+'"/>');//营业执照照片
+                }
+
+
+
+
+
+//                for (i in obj.text()){
+
+//                }
+//                for(var i=0;i<obj.length;i++){
+
+//                }
+//                $.inArray("js", arr)
+//                for (x in typearr){
+//                    if (obj.text() == )
+//                }
+
+
+//                if (obj.text() == )
+                obj.addClass('supplierclassify-infoactive');
+
+
+            }
+        });
+    }
+
+
 </script>
 </body>
 

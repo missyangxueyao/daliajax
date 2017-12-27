@@ -38,12 +38,6 @@
                     <p class="businesscategory">
                         <em>经营品类:</em>
                         <!--<span>女装</span>-->
-                        <!--<span>男装</span>-->
-                        <!--<span>童装</span>-->
-                        <!--<span>饰品</span>-->
-                        <!--<span>鞋子</span>-->
-                        <!--<span>箱包</span>-->
-                        <!--<span>综合</span>-->
                     </p>
                     <p><em>生产规模:</em><input type="text" placeholder="请输入生产规模" class="productionsize"></p>
                     <p class="clothingbrand">
@@ -60,64 +54,7 @@
                     <p class="factory"><em>详细地址:</em><textarea placeholder="请输入详细地址" class="address"></textarea></p>
                 </div>
             </div>
-            <!--设计师工作室基本信息-->
-            <!--<div class="supplierclassify-classify">-->
-                <!--<div class="supplierclassify-info">-->
-                    <!--<p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称"></p>-->
-                    <!--<p>-->
-                        <!--<em>风格:</em>-->
-                        <!--<span>欧美</span>-->
-                        <!--<span>日韩</span>-->
-                        <!--<span>中国风</span>-->
-                        <!--<span>休闲</span>-->
-                        <!--<span>时尚</span>-->
-                        <!--<span>淑女</span>-->
-                        <!--<span>牛仔</span>-->
-                    <!--</p>-->
-                    <!--<p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格"></textarea></p>-->
-                    <!--<p>-->
-                        <!--<em>品牌商标注册图:</em>-->
-                        <!--<img src="images/addimg.png">-->
-                    <!--</p>-->
-                    <!--<p class="designer-region">-->
-                        <!--<em>所在地区:</em>-->
-                        <!--<select class="designer-province"></select> - -->
-                        <!--<select class="designer-city"></select> - -->
-                        <!--<select class="designer-area"></select>-->
-                        <!--<strong>（省、市、区）</strong>-->
-                    <!--</p>-->
-                    <!--<p class="designer-address"><em>详细地址:</em><textarea placeholder="请输入详细地址"></textarea></p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--独立品牌设计基本信息-->
-            <!--<div class="supplierclassify-classify">-->
-                <!--<div class="supplierclassify-info">-->
-                    <!--<p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称"></p>-->
-                    <!--<p>-->
-                        <!--<em>风格:</em>-->
-                        <!--<span>欧美</span>-->
-                        <!--<span>日韩</span>-->
-                        <!--<span>中国风</span>-->
-                        <!--<span>休闲</span>-->
-                        <!--<span>时尚</span>-->
-                        <!--<span>淑女</span>-->
-                        <!--<span>牛仔</span>-->
-                    <!--</p>-->
-                    <!--<p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格"></textarea></p>-->
-                    <!--<p>-->
-                        <!--<em>品牌商标注册图:</em>-->
-                        <!--<img src="images/addimg.png">-->
-                    <!--</p>-->
-                    <!--<p class="brand-region">-->
-                        <!--<em>所在地区:</em>-->
-                        <!--<select class="brand-province"></select> - -->
-                        <!--<select class="brand-city"></select> - -->
-                        <!--<select class="brand-area"></select>-->
-                        <!--<strong>（省、市、区）</strong>-->
-                    <!--</p>-->
-                    <!--<p class="brand-address"><em>详细地址:</em><textarea placeholder="请输入详细地址"></textarea></p>-->
-                <!--</div>-->
-            <!--</div>-->
+
         </div>
     </div>
     <div class="companyinfo supplierclassify-one">
@@ -163,7 +100,7 @@
                 <strong>（年、月、日）</strong>
             </p>
             <p class="cert-no"><em>营业执照号:</em><input type="text" placeholder="请输入营业执照号"></p>
-            <p>
+            <p class="cert-pic">
                 <em>营业执照照片:</em>
                 <img src="images/addimg.png" class="addimg">
                 <!--<input type="file" style="display:none">-->
@@ -171,14 +108,13 @@
             <p class="gongimg">
                 <em>工厂照片:</em>
                 <img src="images/addimg.png" class="addimg">
-                <img src="images/addimg.png" class="addimg">
-                <input type="file" style="display:none" id="file">
+                <input type="file" id="upload1" name="PIC" onchange="uploadImage(this, 'upload1');"/>
             </p>
             <!--<p class="jyzk"><em>目前经营情况:</em><textarea placeholder="请输入目前经营情况"></textarea></p>-->
         </div>
     </div>
     <!--<div class="infosubmit" onclick="infomation()"><a href="index.html">提交</a></div>-->
-    <div class="infosubmit" onclick="infomation()"><a href="javascript:void(0)">提交</a></div>
+    <div class="infosubmit" onclick="infomation()"><a href="logoin.html">提交</a></div>
 </div>
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
@@ -190,6 +126,7 @@
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/md5.js"></script>
 <script src="js/showalert.js"></script>
+<script src="js/ajaxFileUpload.js"></script>
 <script src="js/ajax.js"></script>
 <script src="js/city-picker.data.js"></script>
 <script src="js/address.js"></script>
@@ -197,36 +134,31 @@
 <!--<script src="js/designeraddress.js"></script>-->
 <!--<script src="js/brandaddress.js"></script>-->
 <script>
-    window.onload = function () {
         $('.infomationtitle p:last').css({'padding-right':'0'});
         $('.supplierclassify-radio p').find('em').click(function () {
             $(this).addClass('supplierclassify-radiochecked').parent().siblings().find('em').removeClass('supplierclassify-radiochecked');
         });
-        $('.supplierclassify-info p').find('span').toggle(
+
+        myrequest("app_type/listAll.do",null,{},true,function(json){
+                var result = json.data;
+                for(var i=0;i< result.length;i++){
+                    $('.businesscategory').append('<span>'+result[i].TYPE_NAME+'</span>');
+                }
+                var res = json.data1;
+                for (var i=0;i<res.length;i++){
+                    $('.clothingbrand').append('<span>'+res[i].SERVER_NAME+'</span>')
+                }
+            $('.businesscategory').find('span').toggle(
                 function(){
                     $(this).addClass('supplierclassify-infoactive');
+                    alert('11')
                 },
                 function(){
                     $(this).removeClass('supplierclassify-infoactive');
+                    alert('12')
                 }
-        );
-    };
-    var mydata1 = {
-
-    };
-    myrequest("app_type/listAll.do",null,mydata1,true,function(json){
-        if (json.response == 0) {
-            var result = json.data;
-            for(var i=0;i< result.length;i++){
-                $('.businesscategory').append('<span>'+result[i].TYPE_NAME+'</span>');
-            }
-            var res = json.data1;
-            for (var i=0;i<res.length;i++){
-                $('.clothingbrand').append('<span>'+res[i].SERVER_NAME+'</span>')
-            }
-
-        }
-    });
+            )
+        });
 
     function infomation() {
 
@@ -303,14 +235,70 @@
         });
     }
 
-
-
+    if (sessionStorage.getItem("VERIFY") == 0 && sessionStorage.getItem("CATEGORY") == 0 || sessionStorage.getItem("VERIFY") == 1 && sessionStorage.getItem("CATEGORY") == 0 || sessionStorage.getItem("VERIFY") ==3 && sessionStorage.getItem("CATEGORY") == 0 ){
+        againedit();
+    }
     function againedit() {
+        var myData = {};
 
-        myrequest("app_user/get.do",null,{},true,function(json){
-            if (json.response == 0) {
-                var result = json.data;
+        myrequest("app_user/get.do",null,myData,true,function(json){
+            var result = json.data;
+            var obj = $('.businesscategory span');
+
+            //$inArray(value,array) 如果array中有value,返回的是value在array中的索引;如果没有返回-1
+//            var typearr = [];
+//            for (var i=0;i<result.typeList.length;i++){
+//                var typelist = '';
+//                typelist += result.typeList[i].TYPE_NAME;
+//                typearr.push(typelist);
+//            }
+//            for (var i=0;i<obj.length;i++){
+//                if ($.inArray(obj.eq(i).text(),typearr) != -1) {
+//                    obj.eq(i).addClass('supplierclassify-infoactive');
+//                }
+//            }
+            for (var i=0;i<obj.length;i++){
+                var text = obj.eq(i).text();
+                var ab = false;
+                for(var j=0;j<result.typeList.length;j++){
+                    if (result.typeList[j].TYPE_NAME == text) {
+                        ab = true;
+                        break;
+                    }
+                }
+                if (ab == true){
+                    obj.eq(i).addClass('supplierclassify-infoactive');
+                }
             }
+
+
+                var plist = $('.companyinfo-contact p');
+
+                $('.productionsize').val(result.SIZE) ;
+                $('.address').val(result.ADDRESS);
+                plist.eq(0).find('input').val(result.CONTRACT);
+                plist.eq(1).find('input').val(result.TELPHONE);
+                plist.eq(2).find('input').val(result.EMAIL);
+                if(result.TYPE == 0){
+                    $('.tax-qualification p').eq(0).find('em').addClass('supplierclassify-radiochecked')
+                } else {
+                    $('.tax-qualification p').eq(1).find('em').addClass('supplierclassify-radiochecked')
+                }
+                var taxlist = $('.companyinfo-tax p');
+                taxlist.eq(0).find('input').val(result.NUMBER);
+                taxlist.eq(1).find('input').val(result.REBATE);
+                taxlist.eq(2).find('input').val(result.CERT);
+                taxlist.eq(4).find('input').val(result.CERT_NO);
+                var IN_PIC = result.IN_PIC.split(';');
+                var CERT_PIC = result.CERT_PIC.split(';')
+                for(var i=0;i<IN_PIC.length;i++){
+                    $('.gongimg').append('<img src="'+API_SERVICE_IMAGE_URL+IN_PIC[i]+'"/>');
+                }
+                for(var i=0;i<CERT_PIC.length;i++){
+                    $('.cert-pic').append('<img src="'+API_SERVICE_IMAGE_URL+CERT_PIC[i]+'"/>');
+
+                }
+
         });
     }
 

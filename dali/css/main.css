@@ -969,18 +969,17 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
     font-size: 12px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+.pagination-box{
+    background: #FFFFFF;
+}
+.pagination>li>a, .pagination>li>span{
+    border:none !important;
+    color: #666666;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+    color: #E8C574 !important;
+    background: none;
+}
 
 .head-fg{
     height:100px;

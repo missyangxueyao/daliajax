@@ -45,7 +45,7 @@
 			}
 //			$("#uploadForm").submit();
 			var user = $('.aa').val();
-			var formData = new FormData($(".pageForm")[0]);
+			var formData = new FormData($(".pageForm"));
 			$.ajax({
 				type: "POST",
 				url:'http://121.199.8.244:8880/ELC/app_pic/upload.do' ,

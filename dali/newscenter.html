@@ -46,55 +46,21 @@
         </div>
         <div class="newsmain-right">
             <div class="newslist" style="display: block">
-                <div class="newslist-one">
-                    <h1>2017-09-10 22：07：32</h1>
-                    <p>
-                        消息内容消息内容消息内容消息内容消息内
-                        容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                    </p>
+                <div class="newslist-main">
+                    <!--<div class="newslist-one">-->
+                    <!--<h1>2017-09-10 22：07：32</h1>-->
+                    <!--<p>-->
+                    <!--消息内容消息内容消息内容消息内容消息内-->
+                    <!--容消息内容消息内容消息内容消息内容消息内容消息内容消息内容-->
+                    <!--消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容-->
+                    <!--消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容-->
+                    <!--消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容-->
+                    <!--消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容-->
+                    <!--</p>-->
+                    <!--</div>-->
                 </div>
-                <div class="newslist-one">
-                    <h1>2017-09-10 22：07：32</h1>
-                    <p>
-                        消息内容消息内容消息内容消息内容消息内
-                        容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                    </p>
-                </div>
-                <a href="#">查看更多消息</a>
-            </div>
-            <div class="newslist">
-                <div class="newslist-one">
-                    <h1>2017-09-10 22：07：32</h1>
-                    <p>
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                        订单消息订单消息订单消息订单消息订单消息订单消息订单消息订单消息
-                    </p>
-                </div>
-                <div class="newslist-one">
-                    <h1>2017-09-10 22：07：32</h1>
-                    <p>
-                        消息内容消息内容消息内容消息内容消息内
-                        容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                        消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
-                    </p>
-                </div>
-                <a href="#">查看更多消息</a>
+i
+                <a href="#" onclick="appnfo()">查看更多消息</a>
             </div>
         </div>
     </div>
@@ -107,11 +73,46 @@
     <img src="images/logo.png" alt="">
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
 <script>
-$('.newsmain-leftone').click(function(){
-    $(this).addClass('newsmain-active').siblings().removeClass('newsmain-active');
-    $('.newslist').css('display','none').eq($(this).index()).css('display','block');
-})
+    //页码
+    var page = 0;
+
+    window.onload = function () {
+
+    };
+
+    $('.newsmain-leftone').click(function(){
+
+        $(this).addClass('newsmain-active').siblings().removeClass('newsmain-active');
+        $('.newslist-main').html('');
+        page = 0;
+        appinfo();
+    }).eq(0).click();
+
+
+    function appinfo(){
+
+        var myData = {
+            "PAGE": page++,
+            "TYPE": $('.newsmain-active').index() == 0 ? 0 : 1
+        };
+        myrequest("app_info/findPage.do",null,myData,true,function(json){
+
+            var result = json.data;
+            for (var i=0;i<result.length;i++){
+                var list = '<div class="newslist-one"> ' +
+                        '<h1>'+result[i].CREATETIME+'</h1> ' +
+                        '<p> '+result[i].CONTENT+' </p>' +
+                        ' </div>';
+                $('.newslist-main').append(list);
+            }
+        });
+    }
+
+
 </script>
 </body>
 </html>

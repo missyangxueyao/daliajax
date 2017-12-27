@@ -80,28 +80,27 @@ function myrequest(url,headers,data,isUser,successFunction,successErrorFunction,
  * @param successFunction  成功回调
  * @param failureFunction 失败回调
  * */
-function uploadImage(successFunction,failureFunction){
-    $.uploadOne({
-        url : API_SERVICE_URL + "app_pic/upload.do?DIR=user&Cut=0&APPUSER_ID="+sessionStorage.getItem("APPUSER_ID"),
-        fileName : "PIC",
-        dataType : "json",
-        onSend : function () {
-            return true;
+
+function uploadImage(obj, id) {
+    $.ajaxFileUpload({
+        url: API_SERVICE_URL + "app_pic/upload.do" ,
+        dataType: "json",
+        type: "post",
+        secureuri: false,
+        async: false,
+        fileElementId: id,
+        data: {DIR:"user", Cut: 0, APPUSER_ID:sessionStorage.APPUSER_ID},
+        success: function (data) {
         },
-        onComplate : function (json) {
-            if (data.response == "0") {
-                //成功
-                if (successFunction == null) { return false; }
-                successFunction(json);
-            } else {
-                //失败
-                if (failureFunction == null) { return false; }
-                failureFunction(json);
-            }
+        error: function (data) {
+
+            //console.info(data.data);
+            data = JSON.parse(data.responseText);
+            //$("#" + id).siblings().attr("src", "/" + data.data);
+            $('.gongimg').append('<img src="/' + data.data+'"/>');
         }
     });
 }
-
 /**
  * 将字典转换为字符串
  *
@@ -154,3 +153,7 @@ function getSystemTime(){
     str = year +'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds;
     return str;
 }
+
+
+
+//

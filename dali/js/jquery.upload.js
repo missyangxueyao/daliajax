@@ -7,6 +7,10 @@
 (function($) {
 	var noop = function(){ return true; };
 	var frameCount = 0;
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 	$.uploadDefault = {
 		url: '',
 		fileName: 'filedata',
@@ -34,7 +38,11 @@
 		form.attr("target", frameName).attr('action', opts.url);
 		
 		// form中增加数据域
+<<<<<<< Updated upstream
 		var formHtml = '<input type="file" multiple="multiple" accept="image/*" name="' + opts.fileName + '" onchange="onChooseFile(this)">';
+=======
+		var formHtml = '<input type="file" name="' + opts.fileName + '" onchange="onChooseFile(this)">';
+>>>>>>> Stashed changes
 		for (key in opts.params) {
 			formHtml += '<input type="hidden" name="' + key + '" value="' + opts.params[key] + '">';
 		}
@@ -63,6 +71,7 @@
 		var fileInput = $('input[type=file][name=' + opts.fileName + ']', form);
 		fileInput.click();
 	};
+<<<<<<< Updated upstream
 
 	$.uploadOne = function(options) {
 		var opts = $.extend(jQuery.uploadDefault, options);
@@ -110,6 +119,8 @@
 		var fileInput = $('input[type=file][name=' + opts.fileName + ']', form);
 		fileInput.click();
 	};
+=======
+>>>>>>> Stashed changes
 })(jQuery);
 
 // 选中文件, 提交表单(开始上传)

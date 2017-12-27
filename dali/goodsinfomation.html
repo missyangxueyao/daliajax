@@ -142,18 +142,30 @@
     </p>
     <p class="addcolor">
         <em>阶梯价格：</em>
-        <span class="spanactive">0~200 <input type="text" placeholder="请输入价格"></span>
-        <span class="spanactive">200~500 <input type="text" placeholder="请输入价格"></span>
-        <span class="spanactive">500以上 <input type="text" placeholder="请输入价格"></span>
-        <span class="addspan">+ 添加</span>
+        <span class="addspan" id="addSpan" onclick="showAddPriceJt();">+ 添加</span>
     </p>
     <p class="emtext">
         <em>商品图片：</em>
-        <img src="images/addimg.png" alt="">
-        <img src="images/addimg.png" alt="">
-        <img src="images/addimg.png" alt="">
-        <img src="images/addimg.png" alt="">
-        <img src="images/addimg.png" alt="">
+        <label class="imgLabel">
+            <img src="" alt="">
+            <input type="file" id="upload1" name="PIC" onchange="uploadImage(this, 'upload1');"/>
+        </label>
+        <label class="imgLabel">
+            <img src="" alt="">
+            <input type="file" id="upload2" name="PIC" onchange="uploadImage(this, 'upload2');"/>
+        </label>
+        <label class="imgLabel">
+            <img src="" alt="">
+            <input type="file" id="upload3" name="PIC" onchange="uploadImage(this, 'upload3');"/>
+        </label>
+        <label class="imgLabel">
+            <img src="" alt="">
+            <input type="file" id="upload4" name="PIC" onchange="uploadImage(this, 'upload4');"/>
+        </label>
+        <label class="imgLabel">
+            <img src="" alt="">
+            <input type="file" id="upload5" name="PIC" onchange="uploadImage(this, 'upload5');"/>
+        </label>
     </p>
     <p>
         <em>起订量：</em>
@@ -169,108 +181,23 @@
     <img src="images/logo.png" alt="">
 </div>
 
-<script src="js/showalert.js"></script>
-<script src="js/md5.js"></script>
-<script src="js/ajax.js"></script>
-<script src="js/jquery-1.8.3.min.js"></script>
-<script>
-    var daLei = {};
+<!-- 添加阶梯价格 -->
+<div class="alert_dialog" id="jtPrice" style="display: none;">
+    <div class="price_body">
+        <span onclick="$(this).parent().parent().hide();">✕</span>
+        <input type="text" value="" id="minPrice" placeholder="请输入最小价格"/>
+        <em>~</em>
+        <input type="text" value="" id="maxPrice" placeholder="请输入最大价格"/>
+        <a href="javascript:void(0);" onclick="surePrice();">确定</a>
+    </div>
+</div>
 
-new function () {
-    var param = get_param();
-    if (!param.MEET_ID) {
-        history.back();
-        return;
-    }
-    $('.goodsinfomation p.jiJie span').click(function () {
-        $(this).addClass('spanactive').siblings().removeClass("spanactive");
-    });
-    $('.goodsinfomation p strong').click(function () {
-        $(this).addClass('goodsinfomation-radiochecked').siblings().removeClass('goodsinfomation-radiochecked')
-    });
-
-    myrequest('app_type/findAll.do', null, {
-        APPUSER_ID: sessionStorage.APPUSER_ID
-    }, true, function (json) {
-        //系列
-        var xilie = '';
-        $.each(json.data1, function (i, v) {
-            xilie += '<option value="' + v.SERIES_NAME + '">' + v.SERIES_NAME + '</option>';
-        });
-        $("#xilie").html(xilie);
-        //货期
-        var huoqi = '';
-        $.each(json.data2, function (i, v) {
-            huoqi += '<option value="' + v.DAY + '">'+v.DAY+'</option>';
-        });
-        $("#huoqi").html(huoqi);
-        //款式定位
-        var kuanshi = '';
-        $.each(json.data3, function (i, v) {
-            kuanshi += '<option value="'+v.POSITION+'">'+v.POSITION+'</option>';
-        });
-        $("#kuanshi").html(kuanshi);
-        //大类
-        daLei = json.data;
-        var daLei1Html = '';
-        var daLei2Html = ''
-        $.each(daLei, function (i, v) {
-            daLei1Html += '<option value="'+i+'">'+v.TYPE_NAME+'</option>';
-            if (i === 0 && v.type_detailList.length > 0) {
-                $.each(v.type_detailList, function (k, val) {
-                    if (val.DETAIL_NAME) {
-                        daLei2Html += '<option value="' + v.TYPE_NAME + ',' + val.DETAIL_NAME + '">'+val.DETAIL_NAME+'</option>'
-                    } else {
-                        daLei2Html += '<option value="' + v.TYPE_NAME + '"></option>'
-                    }
-                });
-                $("#dalei2").html(daLei2Html);
-            } else if (i === 0) {
-                daLei2Html = '<option value="' + v.TYPE_NAME + '"></option>'
-                $("#dalei2").html(daLei2Html);
-            }
-            $("#dalei1").html(daLei1Html);
-        });
-    })
-};
-
-    function addGuiGe() {
-        var html = '<p>' +
-            '            <em>尺码：</em><input type="text"/>' +
-            '            <em>颜色：</em><input type="text"/>' +
-            '            <em>价格：</em><input type="text"/>' +
-            '            <i onclick="addGuiGe()"></i><i class="del" onclick="deleteGuiGe(this);"></i>' +
-            '        </p>';
-        $("#guiGe").append(html);
-    }
-
-    function deleteGuiGe(obj) {
-        obj = $(obj);
-        if ($("#guiGe p").length <= 1) {
-            show_alert("请至少保留一个");
-            return;
-        }
-        obj.parent().remove();
-    }
-
-    function selectDaLei(key) {
-        var data = daLei[key].type_detailList;
-        var daLei2Html = '';
-        if (data.length > 0) {
-            $.each(data, function (k, val) {
-                if (val.DETAIL_NAME) {
-                    daLei2Html += '<option value="' + daLei[key].TYPE_NAME + ',' + val.DETAIL_NAME + '">'+val.DETAIL_NAME+'</option>'
-                } else {
-                    daLei2Html += '<option value="' + daLei[key].TYPE_NAME + '"></option>'
-                }
-            });
-            $("#dalei2").html(daLei2Html);
-        } else {
-            daLei2Html = '<option value="' + daLei[key].TYPE_NAME + '"></option>'
-            $("#dalei2").html(daLei2Html);
-        }
-    }
-</script>
+<script type="text/javascript" src="js/showalert.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/ajaxFileUpload.js"></script>
+<script type="text/javascript" src="js/goodsInfo.js"></script>
 </body>
 
 </html>

@@ -37,24 +37,18 @@
                 <div class="supplierclassify-info">
                     <p class="businesscategory">
                         <em>经营品类:</em>
-                        <span>女装</span>
-                        <span>男装</span>
-                        <span>童装</span>
-                        <span>饰品</span>
-                        <span>鞋子</span>
-                        <span>箱包</span>
-                        <span>综合</span>
+                        <!--<span>女装</span>-->
+                        <!--<span>男装</span>-->
+                        <!--<span>童装</span>-->
+                        <!--<span>饰品</span>-->
+                        <!--<span>鞋子</span>-->
+                        <!--<span>箱包</span>-->
+                        <!--<span>综合</span>-->
                     </p>
                     <p><em>生产规模:</em><input type="text" placeholder="请输入生产规模" class="productionsize"></p>
                     <p class="clothingbrand">
                         <em>服装品牌:</em>
-                        <span>GXG</span>
-                        <span>UNIQLO</span>
-                        <span>MU</span>
-                        <span>HIPANDA</span>
-                        <span>I.T</span>
-                        <span>ONLY</span>
-                        <span>MU</span>
+                        <!--<span>GXG</span>-->
                     </p>
                     <p class="factory-region">
                         <em>所在地区:</em>
@@ -217,13 +211,22 @@
                 }
         );
     };
+    var mydata1 = {
 
+    };
+    myrequest("app_type/listAll.do",null,mydata1,true,function(json){
+        if (json.response == 0) {
+            var result = json.data;
+            for(var i=0;i< result.length;i++){
+                $('.businesscategory').append('<span>'+result[i].TYPE_NAME+'</span>');
+            }
+            var res = json.data1;
+            for (var i=0;i<res.length;i++){
+                $('.clothingbrand').append('<span>'+res[i].SERVER_NAME+'</span>')
+            }
 
-
-
-
-
-
+        }
+    });
 
     function infomation() {
 
@@ -299,6 +302,21 @@
 //            show_alert(json.desc);
         });
     }
+
+
+
+    function againedit() {
+
+        myrequest("app_user/get.do",null,{},true,function(json){
+            if (json.response == 0) {
+                var result = json.data;
+            }
+        });
+    }
+
+
+
+
 </script>
 </body>
 

@@ -108,7 +108,7 @@
 
 
 
-    myrequest("app_user/get.do",null,null,true,function(json){
+    myrequest("app_user/get.do",null,{},true,function(json){
         if (json.response == 0) {
             var result = json.data;
             var objleft = $('.supplierclassify .infomationreview-left p');

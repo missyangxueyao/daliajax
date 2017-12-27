@@ -19,9 +19,10 @@
 
     function uploadImage() {
         $.uploadOne({
-            url : "http://121.199.8.244:8880/ELC/" + "app_pic/upload.do?DIR=user&APPUSER_ID="+"9"+"&Cut=0"+"&width=&height=",
+            url : "http://121.199.8.244:8880/ELC/" + "app_pic/upload.do?DIR=user&APPUSER_ID="+"12"+"&Cut=0"+"&width=&height=",
             fileName : "PIC",
             dataType : "json",
+            async: false,
             onSend : function () {
                 return true;
             },

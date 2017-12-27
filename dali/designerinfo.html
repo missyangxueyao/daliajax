@@ -27,8 +27,8 @@
         <div class="supplierclassify-radio supplierclassify-all">
             <strong>供应商分类:</strong>
             <p><input type="radio" name="supplier"><em onclick="redirect('infomation.html')"></em><span>ODM工厂</span></p>
-            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')"></em><span>设计室工作室</span></p>
-            <p><input type="radio" name="supplier"><em class="supplierclassify-radiochecked" onclick="redirect('brandinfo.html')"></em><span>独立品牌设计师</span></p>
+            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')" class="supplierclassify-radiochecked"></em><span>设计室工作室</span></p>
+            <p><input type="radio" name="supplier"><em  onclick="redirect('brandinfo.html')"></em><span>独立品牌设计师</span></p>
         </div>
         <h1>基本信息</h1>
         <div>
@@ -38,13 +38,13 @@
                     <p><em>品牌名称:</em><input type="text" placeholder="请输入品牌名称"></p>
                     <p class="designer-tip">
                         <em>风格:</em>
-                        <span>欧美</span>
-                        <span>日韩</span>
-                        <span>中国风</span>
-                        <span>休闲</span>
-                        <span>时尚</span>
-                        <span>淑女</span>
-                        <span>牛仔</span>
+                        <!--<span>欧美</span>-->
+                        <!--<span>日韩</span>-->
+                        <!--<span>中国风</span>-->
+                        <!--<span>休闲</span>-->
+                        <!--<span>时尚</span>-->
+                        <!--<span>淑女</span>-->
+                        <!--<span>牛仔</span>-->
                     </p>
                     <p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格"></textarea></p>
                     <p>
@@ -110,12 +110,6 @@
                 <img src="images/addimg.png" class="addimg">
                 <!--<input type="file" style="display:none">-->
             </p>
-            <p class="gongimg">
-                <em>工厂照片:</em>
-                <img src="images/addimg.png" class="addimg">
-                <img src="images/addimg.png" class="addimg">
-                <input type="file" style="display:none" id="file">
-            </p>
             <p class="jyzk"><em>目前经营情况:</em><textarea placeholder="请输入目前经营情况"></textarea></p>
         </div>
     </div>
@@ -140,6 +134,9 @@
 <script>
     window.onload = function () {
         $('.infomationtitle p:last').css({'padding-right':'0'});
+        $('.supplierclassify-radio p').find('em').click(function () {
+            $(this).addClass('supplierclassify-radiochecked').parent().siblings().find('em').removeClass('supplierclassify-radiochecked');
+        });
         $('.supplierclassify-info p').find('span').toggle(
                 function(){
                     $(this).addClass('supplierclassify-infoactive');
@@ -149,6 +146,18 @@
                 }
         );
     };
+    var mydata1 = {
+
+    };
+    myrequest("app_tip/listAll.do",null,mydata1,true,function(json){
+        if (json.response == 0) {
+            var result = json.data;
+            for(var i=0;i< result.length;i++){
+                $('.designer-tip').append('<span>'+result[i].TIP+'</span>');
+            }
+        }
+    });
+
     function infomation() {
         var designerinfo = $('.designerinfo p');
         var brand = designerinfo.eq(0).find('input').val();

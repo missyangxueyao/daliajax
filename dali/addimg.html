@@ -45,14 +45,11 @@
 			}
 //			$("#uploadForm").submit();
 			var user = $('.aa').val();
+			var formData = new FormData($(".pageForm")[0]);
 			$.ajax({
 				type: "POST",
 				url:'http://121.199.8.244:8880/ELC/app_pic/upload.do' ,
-				data: {
-					DIR:user,
-					APPUSER_ID:12,
-					Cut:0
-				},
+				data: formData,
 				contentType: "application/json",
 				dataType: "JSON",
 				async: true,

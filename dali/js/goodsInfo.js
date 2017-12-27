@@ -1,7 +1,8 @@
 var daLei = {};
+var param;
 
 new function () {
-    var param = get_param();
+    param = get_param();
     if (!param.MEET_ID) {
         history.back();
         return;
@@ -60,9 +61,9 @@ new function () {
 
 function addGuiGe() {
     var html = '<p>' +
-        '            <em>尺码：</em><input type="text"/>' +
-        '            <em>颜色：</em><input type="text"/>' +
-        '            <em>价格：</em><input type="text"/>' +
+        '            <em>尺码：</em><input type="text" class="size"/>' +
+        '            <em>颜色：</em><input type="text" class="color"/>' +
+        '            <em>价格：</em><input type="text" class="price"/>' +
         '            <i onclick="addGuiGe()"></i><i class="del" onclick="deleteGuiGe(this);"></i>' +
         '        </p>';
     $("#guiGe").append(html);
@@ -113,25 +114,158 @@ function surePrice() {
     } else {
         text = min_price + "件以上";
     }
-    var html = '<span class="spanactive"> '+text+' <input type="hidden" class="min" value="'+min_price+'" /> <input type="hidden" class="max" value="'+max_price+'" /> <input type="text" class="price" placeholder="请输入价格"> <i></i></span>';
+    var html = '<span class="spanactive"> '+text+' <input type="hidden" class="min" value="'+min_price+'" /> <input type="hidden" class="max" value="'+max_price+'" /> <input type="text" class="price" placeholder="请输入价格"> <i onclick="deleteThis(this);"></i></span>';
     $("#addSpan").before(html);
     $("#jtPrice input").val("");
 }
 
-function uploadImage(obj, id) {
+function fileUploadImage(obj, id) {
     $.ajaxFileUpload({
-        // url: API_SERVICE_URL + "app_pic/upload.do",
-        url: "http://121.199.8.244:3210/api/upload",
+        url: API_SERVICE_URL + "app_pic/upload.do",
         dataType: "json",
         type: "post",
         secureuri: false,
         async: false,
         fileElementId: id,
+        data: {DIR:"goods", Cut: 0, APPUSER_ID:sessionStorage.APPUSER_ID},
         success: function (data) {
             console.log(data);
         },
         error: function (data) {
-            console.log(data);
+            data = JSON.parse(data.responseText);
+            $("#" + id).siblings().attr("src", "/" + data.data);
         }
     });
+}
+
+function deleteThis(obj) {
+    obj = $(obj);
+    obj.parent().remove();
+}
+
+function submitGoods() {
+    var toJson = GET_LADDER_ARRAY();
+    var data = {
+        "ACC_PRICE": $("#ACC_PRICE").val() ? ($("#ACC_PRICE").val() + $("#ACC_PRICE_").val()) : "",
+        "APPUSER_ID": sessionStorage.APPUSER_ID,
+        "ARTICLE_NO": $("#ARTICLE_NO").val(),
+        "DAY": $("#huoqi").val(),
+        "FACE_PRICE": $("#FACE_PRICE").val() ? ($("#FACE_PRICE").val() + $("#FACE_PRICE_").val()) : "",
+        "FORMS": $("#FORMS").val(),
+        "GENGER": $("#GENGER").val(),
+        "GOODS_NAME": $("#GOODS_NAME").val(),
+        "INTRO": $("#INTRO").val(),
+        "IS_REBATE": GET_IS_REBATE(),
+        "REBATE": GET_IS_REBATE ? $("#REBATE").val() : 0,
+        "LADDER_JSON": toJson ? JSON.stringify(toJson) : "",
+        "MEET_ID": param.MEET_ID,
+        "MIN_QUINTITY": $("#MIN_QUINTITY").val(),
+        "OTH_PRICE": $("#OTH_PRICE").val() ? ($("#OTH_PRICE").val() + $("#OTH_PRICE_").val()) : 0,
+        "POSITION": $("#kuanshi").val(),
+        "PRO_PRICE": $("#PRO_PRICE").val() ? ($("#PRO_PRICE").val() + $("#PRO_PRICE_").val()) : "",
+        "PRICE": toJson ? toJson[0].PRICE : "",
+        "ROLLPIC": GET_POLL_PIC(),
+        "SEASON": GET_SEASON(),
+        "SERIES_NAME" : $("#xilie").val(),
+        "SIZE_JSON": GET_SIZE_JSON(),
+        "STYLE_NO": $("#STYLE_NO").val(),
+        "TYPE_NAME": $("#dalei2").val()
+    };
+    var isEmpty = false;
+    $.each(data, function (i, v) {
+        if (v === "") {
+            isEmpty = true;
+        }
+    });
+    if (isEmpty) {
+        show_alert("请把信息填写完整！");
+        return;
+    }
+    myrequest("app_sign/add.do", null, data, true, function (data) {
+        location.href = "goodssubmit.html";
+    });
+}
+
+/**
+ * 是否含税
+ * @return {number}
+ * @constructor
+ */
+function GET_IS_REBATE() {
+    if ($("#IS_REBATE").hasClass("goodsinfomation-radiochecked")) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * @return {string|object}
+ * @constructor
+ */
+function GET_LADDER_ARRAY() {
+    var json = [], i = 0;
+    var isNull = false;
+    $(".addcolor > .spanactive").each(function () {
+        var _obj = $(this);
+        json[i] = {
+            "BEGIN_NUM": _obj.children(".min").val(),
+            "END_NUM": _obj.children(".max").val(),
+            "PRICE": _obj.children(".price").val(),
+        };
+        if (json[i].PRICE == "") {
+            isNull = true;
+        }
+        i++;
+    });
+    if (isNull) {
+        return "";
+    }
+    return json;
+}
+
+/**
+ * @return {string}
+ * @constructor
+ */
+function GET_POLL_PIC() {
+    var str = '', isNull = false;
+    $(".imgLabel").each(function () {
+        var obj = $(this);
+        if (!obj.find("img").attr("src")) {
+            isNull = true;
+            return ;
+        }
+        str = str ? (str + ";" + obj.find("img").attr("src")) : obj.find("img").attr("src");
+    });
+    return isNull ? "" : str;
+}
+
+/**
+ * @return {*|jQuery}
+ * @constructor
+ */
+function GET_SEASON() {
+    return $("#SEASON span.spanactive").html();
+}
+
+/**
+ * @return {string}
+ * @constructor
+ */
+function GET_SIZE_JSON() {
+    var json = [], i = 0, isNull = false;
+    $("#guiGe p").each(function () {
+        var obj = $(this);
+        json[i] = {
+            SIZE: obj.find(".size").val(),
+            COLOR:  obj.find(".color").val(),
+            COLOR_PRICE:  obj.find(".price").val(),
+        };
+        if (json[i].SIZE === "" || json[i].COLOR === "" || json[i].COLOR_PRICE === "") {
+            isNull = true;
+        }
+        i++;
+    });
+    return isNull ? "" : JSON.stringify(json);
 }

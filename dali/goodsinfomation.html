@@ -22,10 +22,10 @@
 <p class="head-fg"></p>
 <div class="layout goodsinfomation">
     <h1>商品信息</h1>
-    <p><em>款号：</em><input type="text" placeholder="请输入款号"></p>
-    <p><em>货号：</em><input type="text" placeholder="请输入货号"></p>
-    <p><em>商品名称：</em><input type="text" placeholder="请输入商品名称"></p>
-    <p class="jiJie"><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
+    <p><em>款号：</em><input type="text" placeholder="请输入款号" id="STYLE_NO"></p>
+    <p><em>货号：</em><input type="text" placeholder="请输入货号" id="ARTICLE_NO"></p>
+    <p><em>商品名称：</em><input type="text" placeholder="请输入商品名称" id="GOODS_NAME"></p>
+    <p class="jiJie" id="SEASON"><em>季节：</em><span>春夏</span><span>秋冬</span><span>全年</span></p>
     <p><em>大类：</em>
         <select name="" id="dalei1" onchange="selectDaLei(this.value);">
             <option value="">请选择</option>
@@ -40,9 +40,9 @@
         </select>
     </p>
     <p><em>性别：</em>
-        <select name="">
-            <option value=""> 男 </option>
-            <option value=""> 女 </option>
+        <select name="" id="GENGER">
+            <option value="0"> 男 </option>
+            <option value="1"> 女 </option>
         </select>
     </p>
     <p><em>系列：</em>
@@ -52,14 +52,14 @@
     </p>
     <p class="emtext">
         <em>商品介绍：</em>
-        <textarea name="" placeholder="请输入商品介绍"></textarea>
+        <textarea name="" id="INTRO" placeholder="请输入商品介绍"></textarea>
     </p>
 
     <div id="guiGe">
         <p>
-            <em>尺码：</em><input type="text"/>
-            <em>颜色：</em><input type="text"/>
-            <em>价格：</em><input type="text"/>
+            <em>尺码：</em><input type="text" class="size"/>
+            <em>颜色：</em><input type="text" class="color"/>
+            <em>价格：</em><input type="text" class="price"/>
             <i onclick="addGuiGe()"></i><i class="del" onclick="deleteGuiGe(this);"></i>
         </p>
     </div>
@@ -81,13 +81,13 @@
     </p>-->
     <p class="emtext">
         <em>成分：</em>
-        <textarea name="" placeholder="例：成分：53.5%锦纶 28.0%粘纤 18.7%棉 里料：96%聚酯纤维 4%氨纶"></textarea>
+        <textarea name="" id="FORMS" placeholder="例：成分：53.5%锦纶 28.0%粘纤 18.7%棉 里料：96%聚酯纤维 4%氨纶"></textarea>
     </p>
     <h1>价格信息</h1>
     <p>
         <em>面料价格：</em>
-        <input type="text" placeholder="请输入面料价格">
-        <select name="">
+        <input type="text" placeholder="请输入面料价格" id="FACE_PRICE">
+        <select name="" id="FACE_PRICE_">
             <option value="RMB">RMB</option>
             <option value="美元">美元</option>
             <option value="日元">日元</option>
@@ -97,8 +97,8 @@
     </p>
     <p>
         <em>辅料价格：</em>
-        <input type="text" placeholder="请输入辅料价格">
-        <select name="">
+        <input type="text" placeholder="请输入辅料价格" id="ACC_PRICE">
+        <select name="" id="ACC_PRICE_">
             <option value="RMB">RMB</option>
             <option value="美元">美元</option>
             <option value="日元">日元</option>
@@ -108,8 +108,8 @@
     </p>
     <p>
         <em>工价：</em>
-        <input type="text" placeholder="请输入工价">
-        <select name="">
+        <input type="text" placeholder="请输入工价" id="PRO_PRICE">
+        <select name="" id="PRO_PRICE_">
             <option value="RMB">RMB</option>
             <option value="美元">美元</option>
             <option value="日元">日元</option>
@@ -119,8 +119,8 @@
     </p>
     <p>
         <em>其他价格(选填)：</em>
-        <input type="text" placeholder="请输入面料价格">
-        <select name="">
+        <input type="text" placeholder="请输入其它价格" id="OTH_PRICE">
+        <select name="" id="OTH_PRICE_">
             <option value="RMB">RMB</option>
             <option value="美元">美元</option>
             <option value="日元">日元</option>
@@ -130,9 +130,9 @@
     </p>
     <p class="istax">
         <em>是否含税：</em>
-        <strong>含税</strong>
-        <strong>不含税</strong>
-        <input type="text" placeholder="请输入含税比例">
+        <strong id="IS_REBATE">含税</strong>
+        <strong id="NO_REBATE">不含税</strong>
+        <input type="text" id="REBATE" placeholder="请输入含税比例">
     </p>
     <p>
         <em>货期：</em>
@@ -148,31 +148,31 @@
         <em>商品图片：</em>
         <label class="imgLabel">
             <img src="" alt="">
-            <input type="file" id="upload1" name="PIC" onchange="uploadImage(this, 'upload1');"/>
+            <input type="file" id="upload1" name="PIC" onchange="fileUploadImage(this, 'upload1');"/>
         </label>
         <label class="imgLabel">
             <img src="" alt="">
-            <input type="file" id="upload2" name="PIC" onchange="uploadImage(this, 'upload2');"/>
+            <input type="file" id="upload2" name="PIC" onchange="fileUploadImage(this, 'upload2');"/>
         </label>
         <label class="imgLabel">
             <img src="" alt="">
-            <input type="file" id="upload3" name="PIC" onchange="uploadImage(this, 'upload3');"/>
+            <input type="file" id="upload3" name="PIC" onchange="fileUploadImage(this, 'upload3');"/>
         </label>
         <label class="imgLabel">
             <img src="" alt="">
-            <input type="file" id="upload4" name="PIC" onchange="uploadImage(this, 'upload4');"/>
+            <input type="file" id="upload4" name="PIC" onchange="fileUploadImage(this, 'upload4');"/>
         </label>
         <label class="imgLabel">
             <img src="" alt="">
-            <input type="file" id="upload5" name="PIC" onchange="uploadImage(this, 'upload5');"/>
+            <input type="file" id="upload5" name="PIC" onchange="fileUploadImage(this, 'upload5');"/>
         </label>
     </p>
     <p>
         <em>起订量：</em>
-        <input type="text" placeholder="请输入起订量">
+        <input type="text" placeholder="请输入起订量" id="MIN_QUINTITY">
     </p>
 </div>
-<div class="infosubmit"><a href="goodssubmit.html">提交</a></div>
+<div class="infosubmit"><a href="javascript:void(0);" onclick="submitGoods()">提交</a></div>
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
     <h1>联系电话：400-888-8888</h1>

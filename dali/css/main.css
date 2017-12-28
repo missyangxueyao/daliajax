@@ -207,13 +207,19 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
 .companyinfo .supplierclassify-radio {
     margin: 20px 0 0 50px;
 }
-.supplierclassify-info p img{
+.supplierclassify-info p img,.supplierclassify-info p .addimg{
     width: 120px;
     height: 120px;
     display: block;
     float: left;
     margin-right: 10px;
     border-radius: 5px;
+}
+.supplierclassify-info p .addimg{
+    background: url("../images/addimg.png") no-repeat;
+    background-size: 100% 100%;
+    padding:0;
+    border: none;
 }
 .infosubmit{
     background: #E8C574;
@@ -989,5 +995,59 @@ body{background: url("../images/indexbg1.png") no-repeat left 100px;background-s
 .show_alert{display:inline-block; padding:15px 30px; font-size:18px; line-height:100px; color:#fff; background:rgba(0, 0, 0, 0.8); box-shadow: 0 0 1px 1px rgba(70, 70, 70, 0.7); border-radius:5px; text-align:center; margin:auto; z-index:3;position: absolute;top: 0;left: 0;right: 0;bottom: 0;
     width: 200px;
     height:100px;}
+
+
+
+.remove-up{
+    display: none;
+    background: #f2f2f2;
+    position: absolute;
+    margin:auto;
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0;
+    width: 300px;
+    height:150px;
+    padding:20px;
+    z-index: 99;
+    text-align: center;
+}
+.remove-up h1{
+    line-height:60px;
+}
+.remove-up span{
+    padding: 0 20px;
+    /*width:100px;*/
+    line-height:30px;
+    background: #E8C574;
+    border-radius: 3px;
+    display: inline-block;
+
+}
+
+
+.imgLabel {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+.removeimg img {
+    background: url(../images/addimg.png) no-repeat 50%;
+    background-size: 100% 100%;
+}
+
+
+.imgLabel input[type="file"] {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
 
 /*?/

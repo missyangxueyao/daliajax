@@ -58,7 +58,7 @@ function restProvince() {
 
     var array = Object.values(provinceDictionary);
     for(var i = 0;i < array.length;i++) {
-        var option = '<option>' + array[i] + '</option>';
+        var option = '<option value="'+array[i]+'">' + array[i] + '</option>';
         $('.province').append(option);
     }
 }
@@ -72,7 +72,7 @@ function restCity() {
     cityDictionary = getNextLevelDictionary(false,getKeyOfValue(provinceDictionary,provinceValue));
     var cityArray = Object.values(cityDictionary);
     for(var i = 0;i < cityArray.length;i++) {
-        var cityOption = '<option value="">' + cityArray[i] + '</option>';
+        var cityOption = '<option value="'+cityArray[i]+'">' + cityArray[i] + '</option>';
         $('.city').append(cityOption);
     }
 }
@@ -86,7 +86,7 @@ function restArea() {
     areaDictionary = getNextLevelDictionary(false,getKeyOfValue(cityDictionary,cityValue));
     var areaArray = Object.values(areaDictionary);
     for(var i = 0;i < areaArray.length;i++) {
-        var areaOption = '<option value="">' + areaArray[i] + '</option>';
+        var areaOption = '<option value="' + areaArray[i] + '">' + areaArray[i] + '</option>';
         $('.area').append(areaOption);
     }
 

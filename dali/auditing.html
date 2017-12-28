@@ -114,7 +114,16 @@
             var result = json.data;
             var objleft = $('.supplierclassify .infomationreview-left p');
             var objright = $('.supplierclassify .infomationreview-right p');
-            objleft.eq(0).append(result.CATEGORY);
+            var CATEGORY = '';
+            if (result.CATEGORY == 0) {
+                CATEGORY = "ODM工厂"
+            } else if (result.CATEGORY == 1) {
+                CATEGORY = "设计师工作室"
+            } else {
+                CATEGORY = "独立品牌设计师"
+            }
+            console.log(result.CATEGORY);
+            objleft.eq(0).append(CATEGORY);
             for (var i=0;i<result.typeList.length;i++){
                 var typeList = '<span class="supplierclassify-infoactive">'+result.typeList[i].TYPE_NAME+'</span>';
                 objleft.eq(1).append(typeList);
@@ -140,6 +149,7 @@
             infoabjright.eq(3).append(result.LIMIT);
             $('.supplierclassify-infoimgfirst').append('<img src="'+API_SERVICE_IMAGE_URL+result.CERT_PIC+'"/>');
             var IN_PICarr = result.IN_PIC.split(';');
+            console.info(IN_PICarr);
             for (var i=0;i<IN_PICarr.length;i++){
                 var imgs = '<img src="'+API_SERVICE_IMAGE_URL+IN_PICarr[i]+'"/>';
                 $('.supplierclassify-infoimgsecond').append(imgs)

@@ -19,7 +19,7 @@
     </div>
     <div class="logoin-in" onclick="login()"><a href="javascript:void (0)">登录</a></div>
     <div class="logoin-register"><a href="register.html">立即注册</a></div>
-    <div class="forget-password"><a href="#">忘记密码?</a></div>
+    <div class="forget-password"><a href="forget.html">忘记密码?</a></div>
 
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
@@ -36,7 +36,6 @@
         var phone = $('.logoin-phone').find('input').val();
         var password = $('.logoin-password').find('input').val();
         var myData = {
-            "CATEGORY":"0",
             "PASSWORD":password,
             "PHONE":phone
         };

@@ -58,7 +58,7 @@
         };
 
         $.ajax({
-            url: allurl+'/app_user/getCode.do',
+            url: API_SERVICE_URL+'/app_user/getCode.do',
             type: 'post',
             dataType: 'JSON',
             contentType: "application/json",
@@ -104,12 +104,13 @@
         var phone = $('.logoin-phone').find('input').val();
         var result = $('.logoin-test').find('input').val();
         var password = $('.logoin-password').find('input').val();
+        var code = $('.logoin-invite').find('input').val();
 
           var myData = {
-            "CATEGORY":'0',//0:ODM工厂 1:设计师工作室 2:独立品牌设计师
-            "PASSWORD":password,
-            "PHONE":phone,
-            "RESULT":result
+              "PASSWORD":password,
+              "PHONE":phone,
+              "RESULT":result,
+              "P_CODE":code
         };
 
         if (phone='') {
@@ -121,15 +122,13 @@
             return;
         }
         if (password = '') {
-            show_alert('请输入您的密码')
+            show_alert('请输入您的密码');
             return;
         }
 
         myrequest("app_user/register.do",null,myData,false,function(json){
-            show_alert('注册成功');
             window.location.href = 'infomation.html';
             sessionStorage.setItem("APPUSER_ID",json.data.APPUSER_ID);
-            console.info(APPUSER_ID)
         });
     }
 </script>

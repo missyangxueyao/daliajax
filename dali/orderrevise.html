@@ -20,29 +20,32 @@
 </div>
 <p class="head-fg"></p>
 <div class="layout orderrevise">
-    <div class="homepagelist-one">
-        <img src="images/indexbg.png" alt="">
-        <div class="homepagelist-oneright">
-            <h1>大翻领系带双面尼大衣</h1>
-            <h2>单价 <span>￥268</span></h2>
-            <h3>X100件</h3>
-            <p>季节：春夏 品类：大衣 起订量：单色3件 颜色：黑色、白色 尺寸：均码 面料：双面尼 风格：欧美 货期7-15天</p>
-            <div class="goodstime">货期：7-15天 <h4>合计：<span>6800元</span></h4></div>
-        </div>
+    <div class="bodymain">
+
     </div>
+    <!--<div class="homepagelist-one">-->
+        <!--<img src="images/indexbg.png" alt="">-->
+        <!--<div class="homepagelist-oneright">-->
+            <!--<h1>大翻领系带双面尼大衣</h1>-->
+            <!--<h2>单价 <span>￥268</span></h2>-->
+            <!--<h3>X100件</h3>-->
+            <!--<p>季节：春夏 品类：大衣 起订量：单色3件 颜色：黑色、白色 尺寸：均码 面料：双面尼 风格：欧美 货期7-15天</p>-->
+            <!--<div class="goodstime">货期：7-15天 <h4>合计：<span>6800元</span></h4></div>-->
+        <!--</div>-->
+    <!--</div>-->
     <ul class="orderrevise-color">
-        <li>黑色s <input type="text"></li>
-        <li>黑色m <input type="text"></li>
-        <li>黑色l <input type="text"></li>
-        <li>白色s <input type="text"></li>
-        <li>黑色s <input type="text"></li>
-        <li>黑色s <input type="text"></li>
-        <li>白色s <input type="text"></li>
-        <li>驼色s <input type="text"></li>
-        <li>卡其色s <input type="text"></li>
-        <li>红色s <input type="text"></li>
-        <li>黑色s <input type="text"></li>
-        <li>黑色s <input type="text"></li>
+        <!--<li>黑色s <input type="text"></li>-->
+        <!--<li>黑色m <input type="text"></li>-->
+        <!--<li>黑色l <input type="text"></li>-->
+        <!--<li>白色s <input type="text"></li>-->
+        <!--<li>黑色s <input type="text"></li>-->
+        <!--<li>黑色s <input type="text"></li>-->
+        <!--<li>白色s <input type="text"></li>-->
+        <!--<li>驼色s <input type="text"></li>-->
+        <!--<li>卡其色s <input type="text"></li>-->
+        <!--<li>红色s <input type="text"></li>-->
+        <!--<li>黑色s <input type="text"></li>-->
+        <!--<li>黑色s <input type="text"></li>-->
     </ul>
     <div class="infosubmit">确认修改</div>
 </div>
@@ -53,7 +56,40 @@
     <h1>Copyright © 2017 High Fashion Group.Built by</h1>
     <img src="images/logo.png" alt="">
 </div>
+
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
 </body>
+
+<script>
+
+    myrequest("app_order/get.do",null,{"ORDER_ID": GetQueryString('id')},true,function(json){
+        var result = json.data;
+        var list = '<div class="homepagelist-one">'+
+                '<img src="'+API_SERVICE_IMAGE_URL+result.LOGO+'" alt="">'+
+                '<div class="homepagelist-oneright">'+
+                '<h1>'+result.GOODS_NAME+'</h1>'+
+                '<h2>单价 <span>￥'+result.PRICE+'</span></h2>'+
+                '<h3>X'+result.NUM+'件</h3>'+
+                '<p>'+result.INTRO+'</p>'+
+                '<div class="goodstime">货期：'+result.DAY+' <h4>合计：<span>'+result.ORDER_AMOUNT+'元</span></h4></div>'+
+                '</div>'+
+                ' </div>';
+
+        $('.bodymain').append(list);
+
+        for (var i=0;i<result.cartSizes.length;i++){
+            var cartSize = result.cartSizes[i]
+            $('.orderrevise-color').append('<li>'+cartSize.COLOR+cartSize.SIZE+'<input type="text" value="'+cartSize.NUM+'"></li>');
+        }
+
+    });
+
+</script>
+
+
+
 
 </html>

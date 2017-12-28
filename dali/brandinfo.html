@@ -47,9 +47,13 @@
                         <!--<span>牛仔</span>-->
                     </p>
                     <p><em>品牌定位及价格:</em><textarea placeholder="请输入品牌定位及价格" class="brand-price"></textarea></p>
-                    <p>
+                    <p class="goods-logo removeimg">
                         <em>品牌商标注册图:</em>
-                        <img src="images/addimg.png">
+                        <!--<img src="images/addimg.png">-->
+                        <label class="imgLabel">
+                            <img src="" alt="">
+                            <input type="file" id="upload1" name="PIC" onchange="uploadImage(this, 'upload1');"/>
+                        </label>
                     </p>
                     <p>
                         <em>所在地区:</em>
@@ -81,34 +85,36 @@
             <p><em>营业执照名称:</em><input type="text" placeholder="请输入营业执照名称"> <strong> 例：杭州XXX有限公司</strong></p>
             <p>
                 <em>营业执照有效期:</em>
-                <select name="">
+                <select name="" class="year">
                     <option value="">请选择</option>
                 </select> -
-                <select name="">
+                <select name="" class="month">
                     <option value="">请选择</option>
-                    <option value="">1月</option>
-                    <option value="">2月</option>
-                    <option value="">3月</option>
-                    <option value="">4月</option>
-                    <option value="">5月</option>
-                    <option value="">6月</option>
-                    <option value="">7月</option>
-                    <option value="">8月</option>
-                    <option value="">9月</option>
-                    <option value="">10月</option>
-                    <option value="">11月</option>
-                    <option value="">12月</option>
+                    <!--<option value="">1月</option>-->
+                    <!--<option value="">2月</option>-->
+                    <!--<option value="">3月</option>-->
+                    <!--<option value="">4月</option>-->
+                    <!--<option value="">5月</option>-->
+                    <!--<option value="">6月</option>-->
+                    <!--<option value="">7月</option>-->
+                    <!--<option value="">8月</option>-->
+                    <!--<option value="">9月</option>-->
+                    <!--<option value="">10月</option>-->
+                    <!--<option value="">11月</option>-->
+                    <!--<option value="">12月</option>-->
                 </select> -
-                <select name="">
+                <select name="" class="day">
                     <option value="">请选择</option>
-
                 </select>
                 <strong>（年、月、日）</strong>
             </p>
-            <p class="cert-pic">
+            <p class="cert-pic removeimg">
                 <em>营业执照照片:</em>
-                <img src="images/addimg.png" class="addimg">
-                <!--<input type="file" style="display:none">-->
+                <!--<img src="images/addimg.png" class="addimg">-->
+                <label class="imgLabel">
+                    <img src="" alt="">
+                    <input type="file" id="cert-pic1" name="PIC" onchange="uploadImage(this, 'cert-pic1');"/>
+                </label>
             </p>
             <!---->
             <p class="jyzk"><em>目前经营情况:</em><textarea placeholder="请输入目前经营情况"></textarea></p>
@@ -127,6 +133,7 @@
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/md5.js"></script>
 <script src="js/showalert.js"></script>
+<script src="js/ajaxFileUpload.js"></script>
 <script src="js/ajax.js"></script>
 <script src="js/city-picker.data.js"></script>
 <script src="js/address.js"></script>
@@ -138,6 +145,69 @@
         $('.supplierclassify-radio p').find('em').click(function () {
             $(this).addClass('supplierclassify-radiochecked').parent().siblings().find('em').removeClass('supplierclassify-radiochecked');
         });
+    };
+    var year = 2017;
+    for(var i=0;i<100;i++){
+        year++;
+        $('.year').append('<option value="'+year+'">'+year+'年</option>');
+    }
+    $('.year').change(function(){
+        month();
+        days();
+    });
+    $('.month').change(function(){
+        days();
+    });
+    function month() {
+        for(var i=1;i<13;i++){
+            $('.month').append('<option value="'+i+'">'+i+'月</option>');
+        }
+    }
+    //    判断是否是闰年
+    function isLeapYear(year) {
+        //四年一润,百年不闰,四百年再润
+        var cond1 = year % 4 == 0;  //条件1：年份必须要能被4整除
+        var cond2 = year % 100 != 0;  //条件2：年份不能是整百数
+        var cond3 = year % 400 ==0;  //条件3：年份是400的倍数
+        //当条件1和条件2同时成立时，就肯定是闰年，所以条件1和条件2之间为“与”的关系。
+        //如果条件1和条件2不能同时成立，但如果条件3能成立，则仍然是闰年。所以条件3与前2项为“或”的关系。
+        //所以得出判断闰年的表达式：
+        var cond = cond1 && cond2 || cond3;
+        if(cond) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function days(){
+        $('.day').html('');
+        if($('.month').val() == "1" || $('.month').val() == "3" || $('.month').val() == "5" || $('.month').val() == "7" || $('.month').val() == "8" || $('.month').val() == "10" || $('.month').val() == "12"){
+            for(var i=1;i<=31;i++){
+                $('.day').append('<option value="'+i+'">'+i+'日</option>');
+            }
+        } else if ($('.month').val() == "2"){
+            if (isLeapYear($('.year').val())){
+                for(var i=1;i<=29;i++){
+                    $('.day').append('<option value="'+i+'">'+i+'日</option>');
+                }
+            } else {
+                for(var i=1;i<=28;i++){
+                    $('.day').append('<option value="'+i+'">'+i+'日</option>');
+                }
+            }
+        } else {
+            for(var i=1;i<=30;i++){
+                $('.day').append('<option value="'+i+'">'+i+'日</option>');
+            }
+        }
+    }
+
+    myrequest("app_tip/listAll.do",null,{},true,function(json){
+        var result = json.data;
+        for(var i=0;i< result.length;i++){
+            $('.designer-tip').append('<span data-id="'+result[i].TIP_ID+'">'+result[i].TIP+'</span>');
+        }
+
         $('.supplierclassify-info p').find('span').toggle(
                 function(){
                     $(this).addClass('supplierclassify-infoactive');
@@ -146,18 +216,6 @@
                     $(this).removeClass('supplierclassify-infoactive');
                 }
         );
-    };
-
-    var mydata1 = {
-
-    };
-    myrequest("app_tip/listAll.do",null,mydata1,true,function(json){
-        if (json.response == 0) {
-            var result = json.data;
-            for(var i=0;i< result.length;i++){
-                $('.designer-tip').append('<span>'+result[i].TIP+'</span>');
-            }
-        }
     });
     function infomation() {
         var designerinfo = $('.designerinfo p');
@@ -166,7 +224,8 @@
         var typeid = $('.supplierclassify-info .designer-tip').find('.supplierclassify-infoactive');
         var typeidarr = [];
         for (var i=0;i<typeid.size();i++) {
-            var objarr = $('.supplierclassify-info .designer-tip .supplierclassify-infoactive').eq(i).html();
+//            var objarr = $('.supplierclassify-info .designer-tip .supplierclassify-infoactive').eq(i).html();
+            var objarr = $('.designer-tip .supplierclassify-infoactive').eq(i).attr('data-id');
             typeidarr.push(objarr);
         }
         var tip_id = typeidarr.join(",");
@@ -174,12 +233,11 @@
         var brand_intro = designerinfo.eq(2).find('textarea').val();
         //详细地址
         var address = $('.supplierclassify-classify .address').val();
-        var provinceValue = $('.province option:selected').text();
-        var cityValue = $('.city option:selected').text();
+        var provinceValue = $('.province option:selected').text()+"-";
+        var cityValue = $('.city option:selected').text()+"-";
         var areaValue = $('.area option:selected').text();
         var region = provinceValue + cityValue + areaValue;
         var areaID = getKeyOfValue(areaDictionary,areaValue);
-
        /***************************公司信息部分************************************/
         var company = $('.companyinfo .companyinfo-contact p');
         var contact = company.eq(0).find('input').val();
@@ -197,19 +255,27 @@
         var taxcert = companyinfo_tax.eq(2).find('input').val();
         var sale_info = $('.jyzk').find('textarea').val();
         var cert_no = $('.cert-no').find('input').val();
+        //营业照到期时间
+        var year = $('.year').val()+'-';
+        var month = $('.month').val()+"-";
+        var day = $('.day').val();
+        var time = year+ month+day;
+        //商品注册图片
+        var goods_logo = $(".goods-logo img").attr("src");
+        //营业执照照片
+        var cert_pic = $(".cert-pic img").attr("src");
         var myData = {
-            "APPUSER_ID":"1",
             "ADDRESS": address,
             "BRAND": brand,
             "BRAND_INTRO": brand_intro,
-            "BRAND_LOGO": "1.png",
+            "BRAND_LOGO": goods_logo,
             "CATEGORY": "2",
             "CERT": taxcert,
             "CERT_NO": cert_no,
-            "CERT_PIC": "1.png",
+            "CERT_PIC": cert_pic,
             "CONTRACT": contact,
             "EMAIL": email,
-            "LIMIT": "2020-09-10",
+            "LIMIT": time,
             "NUMBER": taxnumber,
             "REBATE": taxrebate,
             "REGION": region,
@@ -220,80 +286,65 @@
             "TYPE": tax_qualification
         };
         myrequest("app_user/finish.do",{"CATEGORY":"2"},myData,true,function(json){
-            show_alert(json.desc);
+//            show_alert(json.desc);
 
         });
     }
-
     //审核成功之前重新编辑
     if (sessionStorage.getItem("VERIFY") == 0 && sessionStorage.getItem("CATEGORY") == 2 || sessionStorage.getItem("VERIFY") == 1 && sessionStorage.getItem("CATEGORY") == 2 || sessionStorage.getItem("VERIFY") ==3 && sessionStorage.getItem("CATEGORY") == 2){
         againedit();
     }
     function againedit() {
-        var myData = {
-            "APPUSER_ID":"9"
-        };
-
-        myrequest("app_user/get.do",null,myData,true,function(json){
-            if (json.response == 0) {
-                var result = json.data;
-                var obj = $('.businesscategory span');
-                var typearr = [];
-                for (var i=0;i<result.typeList.length;i++){
-                    var typelist = '';
-                    typelist += result.typeList[i].TYPE_NAME;
-                    typearr.push(typelist);
+        myrequest("app_user/get.do",null,{},true,function(json){
+            var result = json.data;
+            var obj = $('.designer-tip span');
+            for (var i=0;i<obj.length;i++){
+                var text = obj.eq(i).text();
+                var ab = false;
+                for(var j=0;j<result.tipList.length;j++){
+                    if (result.tipList[j].TIP == text) {
+                        ab = true;
+                        break;
+                    }
                 }
-                var objstr = obj.text();
-                console.info(objstr);
-
-                var plist = $('.companyinfo-contact p');
-                $('.brandname').val(result.BRAND) ;//品牌名称
-                $('.brand-price').val(result.BRAND_INTRO);//品牌及价格定位
-                $('.address').val(result.ADDRESS);//详细地址
-                plist.eq(0).find('input').val(result.CONTRACT);//联系人
-                plist.eq(1).find('input').val(result.TELPHONE);//电话
-                plist.eq(2).find('input').val(result.EMAIL);//邮箱
-                if(result.TYPE == 0){
-                    $('.tax-qualification p').eq(0).find('em').addClass('supplierclassify-radiochecked') ;//纳税资格
-                } else {
-                    $('.tax-qualification p').eq(1).find('em').addClass('supplierclassify-radiochecked')
+                if (ab == true){
+                    obj.eq(i).addClass('supplierclassify-infoactive');
                 }
-                var taxlist = $('.companyinfo-tax p');
-                taxlist.eq(0).find('input').val(result.NUMBER);//纳税编号
-                taxlist.eq(1).find('input').val(result.REBATE);//纳税税率
-                taxlist.eq(2).find('input').val(result.CERT);//营业执照名称
-                taxlist.eq(4).find('input').val(result.CERT_NO);//营业执照编号
-                var IN_PIC = result.IN_PIC.split(';');
-                var CERT_PIC = result.CERT_PIC.split(';')
-                for(var i=0;i<IN_PIC.length;i++){
-                    $('.gongimg').append('<img src="'+API_SERVICE_IMAGE_URL+IN_PIC[i]+'"/>');//工厂照片
-                }
-                for(var i=0;i<CERT_PIC.length;i++){
-                    $('.cert-pic').append('<img src="'+API_SERVICE_IMAGE_URL+CERT_PIC[i]+'"/>');//营业执照照片
-                }
-
-
-
-
-
-//                for (i in obj.text()){
-
-//                }
-//                for(var i=0;i<obj.length;i++){
-
-//                }
-//                $.inArray("js", arr)
-//                for (x in typearr){
-//                    if (obj.text() == )
-//                }
-
-
-//                if (obj.text() == )
-                obj.addClass('supplierclassify-infoactive');
-
-
             }
+            var plist = $('.companyinfo-contact p');
+            $('.brandname').val(result.BRAND) ;//品牌名称
+            $('.brand-price').val(result.BRAND_INTRO);//品牌及价格定位
+            var regoin = result.REGION.split('-');//区域选择
+            $('.factory-region select').eq(0).val(regoin[0]);
+            $('.factory-region select').eq(1).val(regoin[1]);
+            $('.factory-region select').eq(2).val(regoin[2]);
+            $('.address').val(result.ADDRESS);//详细地址
+            plist.eq(0).find('input').val(result.CONTRACT);//联系人
+            plist.eq(1).find('input').val(result.TELPHONE);//电话
+            plist.eq(2).find('input').val(result.EMAIL);//邮箱
+            if(result.TYPE == 0){
+                $('.tax-qualification p').eq(0).find('em').addClass('supplierclassify-radiochecked') ;//纳税资格
+            } else {
+                $('.tax-qualification p').eq(1).find('em').addClass('supplierclassify-radiochecked')
+            }
+            var taxlist = $('.companyinfo-tax p');
+            taxlist.eq(0).find('input').val(result.NUMBER);//纳税编号
+            taxlist.eq(1).find('input').val(result.REBATE);//纳税税率
+            taxlist.eq(2).find('input').val(result.CERT);//营业执照名称
+            taxlist.eq(4).find('input').val(result.CERT_NO);//营业执照编号
+            // 营业执照期限
+            var limit = result.LIMIT.split('-');
+            $('.year').val(limit[0]);
+            month();
+            $('.month').val(limit[1]);
+            days();
+            $('.day').val(limit[2]);
+            //营业执照
+            $('.cert-pic img').attr('src',result.CERT_PIC);
+            //商标注册获取
+            $('.goods-logo img').attr('src',result.BRAND_LOGO);
+            //经营状况
+            $('.jyzk').find('input').val(result.SALE_INFO);
         });
     }
 

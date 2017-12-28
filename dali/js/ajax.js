@@ -77,11 +77,14 @@ function myrequest(url,headers,data,isUser,successFunction,successErrorFunction,
 /**
  * 上传图片
  *
+ *
+ * @param obj 标签
+ * @param id id
  * @param successFunction  成功回调
  * @param failureFunction 失败回调
  * */
 
-function uploadImage(obj, id) {
+function uploadImage(obj,id) {
     $.ajaxFileUpload({
         url: API_SERVICE_URL + "app_pic/upload.do" ,
         dataType: "json",
@@ -93,11 +96,13 @@ function uploadImage(obj, id) {
         success: function (data) {
         },
         error: function (data) {
+            data = JSON.parse(data.responseText);//json序列化
 
-            //console.info(data.data);
-            data = JSON.parse(data.responseText);
             //$("#" + id).siblings().attr("src", "/" + data.data);
-            $('.gongimg').append('<img src="/' + data.data+'"/>');
+            //$("#" + id).parent().append('<img src="/' + data.data+'"/>');
+            //data = JSON.parse(data.responseText);
+            $("#" + id).siblings().attr("src", "/" + data.data);
+
         }
     });
 }
@@ -154,6 +159,13 @@ function getSystemTime(){
     return str;
 }
 
+//获取链接地址参数
+function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
 
 
-//
+
+

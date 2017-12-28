@@ -60,18 +60,18 @@
                     <!--<div class="gohandle"><a href="orderrevise.html">去处理</a></div>-->
                 <!--</div>-->
             </div>
-            <div class="moreorder-main">
-                <div class="homepagelist-one">
-                    <img src="images/indexbg.png" alt="">
-                    <div class="homepagelist-oneright">
-                        <h1>大翻领系带双面尼大衣</h1>
-                        <h2>单价 <span>￥268</span></h2>
-                        <h3>X100件</h3>
-                        <p>季节：春夏 品类：大衣 起订量：单色3件 颜色：黑色、白色 尺寸：均码 面料：双面尼 风格：欧美 货期7-15天</p>
-                        <div class="goodstime">货期：7-15天 <h4>合计：<span>6800元</span></h4></div>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="moreorder-main">-->
+                <!--<div class="homepagelist-one">-->
+                    <!--<img src="images/indexbg.png" alt="">-->
+                    <!--<div class="homepagelist-oneright">-->
+                        <!--<h1>大翻领系带双面尼大衣</h1>-->
+                        <!--<h2>单价 <span>￥268</span></h2>-->
+                        <!--<h3>X100件</h3>-->
+                        <!--<p>季节：春夏 品类：大衣 起订量：单色3件 颜色：黑色、白色 尺寸：均码 面料：双面尼 风格：欧美 货期7-15天</p>-->
+                        <!--<div class="goodstime">货期：7-15天 <h4>合计：<span>6800元</span></h4></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
@@ -94,45 +94,46 @@
 <script src="js/jqPaginator.js"></script>
 <script>
 
-
     window.onload = function() {
         $('.homepagelist-nav li').click(function(){
             $(this).addClass('homepagenav-active').siblings().removeClass('homepagenav-active');
-            $('.moreorder-main').css('display','none').eq($(this).index()).css('display','block');
-        });
-        requestData();
+//            $('.moreorder-main').css('display','none').eq($(this).index()).css('display','block');
+            requestData();
+
+        }).eq(0).click();
     };
 
+
     function requestData() {
-        myrequest("app_order/findPage.do",null,{"PAGE": "0","STATUS":"0"},true,function(json){
+
+        myrequest("app_order/findPage.do",null,{"PAGE": "0","STATUS":$('.homepagelist-nav .homepagenav-active').index()},true,function(json){
             $('#demo').jqPaginator({
 //                totalCounts:json.total,
-                totalCounts:30,
-                pageSize:10,
-                visiblePages: 10,
+                totalCounts:json.data1,
+                pageSize:json.data2,
+                visiblePages: json.data2,
                 currentPage: 1,
                 onPageChange: function (num, type) {
-                    myrequest("app_order/findPage.do",null,{"PAGE":num-1,"STATUS":"0"},true,function(json){
-                        if(json.response == 0){
-                            var result = json.data;
-                            $('.moreorder-no').html(' ');
-                            for(var i=0;i<result.length;i++){
-                                $('.ordernumber').html('订单号：'+result[0].ORDER_NO+' <p>'+result[0].BEGINETIME+'</p>');
-                                var list = '<div class="homepagelist-one">'+
-                                        '<img src="'+API_SERVICE_IMAGE_URL+result[i].LOGO+'" alt="">'+
-                                        '<div class="homepagelist-oneright">'+
-                                        '<h1>'+result[i].GOODS_NAME+'</h1>'+
-                                        '<h2>单价 <span>￥268</span></h2>'+
-                                        '<h3>X'+result[i].NUM+'件</h3>'+
-                                        '<p>'+result[i].INTRO+'</p>'+
-                                        '<div class="goodstime">货期：'+result[i].DAY+' <h4>合计：<span>6800元</span></h4></div>'+
-                                        '</div>'+
-                                        '<div class="gohandle"><a href="orderrevise.html">去处理</a></div>'+
-                                       ' </div>';
+                    myrequest("app_order/findPage.do",null,{"PAGE":num-1,"STATUS":$('.homepagelist-nav .homepagenav-active').index()},true,function(json){
+                        var result = json.data;
+                        $('.moreorder-main').html(' ');
+                        for(var i=0;i<result.length;i++){
+                            $('.ordernumber').html('订单号：'+result[0].ORDER_NO+' <p>'+result[0].BEGINETIME+'</p>');
+                            var list = '<div class="homepagelist-one">'+
+                                    '<img src="'+API_SERVICE_IMAGE_URL+result[i].LOGO+'" alt="">'+
+                                    '<div class="homepagelist-oneright">'+
+                                    '<h1>'+result[i].GOODS_NAME+'</h1>'+
+                                    '<h2>单价 <span>￥'+result[i].PRICE+'</span></h2>'+
+                                    '<h3>X'+result[i].NUM+'件</h3>'+
+                                    '<p>'+result[i].INTRO+'</p>'+
+                                    '<div class="goodstime">货期：'+result[i].DAY+' <h4>合计：<span>'+result[i].ORDER_AMOUNT+'元</span></h4></div>'+
+                                    '</div>'+
+                                    '<div class="gohandle"><a href="orderrevise.html?id='+result[i].ORDER_ID+'">去处理</a></div>'+
+                                   ' </div>';
 
-                                $('.moreorder-no').append(list);
+                            $('.moreorder-main').append(list);
                             }
-                        }
+
                     });
 
                 }

@@ -22,10 +22,7 @@
     <div class="logoinone logoin-password">
         <input type="password" placeholder="请设置新密码">
     </div>
-    <div class="logoinone logoin-password">
-        <input type="password" placeholder="请确认密码">
-    </div>
-    <div class="logoin-in"><a href="logoin.html">确认修改</a></div>
+    <div class="logoin-in" onclick="register()"><a href="javascript:void (0)">确认修改</a></div>
 
 
 </div>
@@ -57,7 +54,7 @@
         };
 
         $.ajax({
-            url: allurl+'/app_user/getCode.do',
+            url: API_SERVICE_URL+'/app_user/findCode.do',
             type: 'post',
             dataType: 'JSON',
             contentType: "application/json",
@@ -96,6 +93,36 @@
             error : function(XMLHttpRequest, textStatus, errorThrown) {
 
             }
+        });
+    }
+
+    function register(){
+        var phone = $('.logoin-phone').find('input').val();
+        var result = $('.logoin-test').find('input').val();
+        var password = $('.logoin-password').find('input').val();
+
+        var myData = {
+            "CATEGORY":'0',//0:ODM工厂 1:设计师工作室 2:独立品牌设计师
+            "PASSWORD":password,
+            "PHONE":phone,
+            "RESULT":result
+        };
+
+        if (phone='') {
+            show_alert('请输入正确的手机号');
+            return;
+        }
+        if (result = '') {
+            show_alert('请输入验证码');
+            return;
+        }
+        if (password = '') {
+            show_alert('请输入您的密码');
+            return;
+        }
+
+        myrequest("app_user/findPassword.do",null,myData,true,function(json){
+            window.location.href = 'logoin.html';
         });
     }
 </script>

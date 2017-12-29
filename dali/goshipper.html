@@ -36,7 +36,7 @@
     <div class="looklogistics-info goodsinfomation">
         <h1>填写物流信息</h1>
         <p><em>物流公司：</em>
-            <select name="">
+            <select name="" class="shipper-check">
                 <option value="">请选择</option>
             </select>
         </p>
@@ -55,6 +55,20 @@
     <img src="images/logo.png" alt="">
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/showalert.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+<script>
+    myrequest("app_express/listAll.do",null,{},true,function(json){
+        var result = json.data;
+        for (var i=0;i<result.length;i++){
+            $('.shipper-check').append('<option>'+result[i].EXPRESS+'</option>');
+
+        }
+
+    })
+
+</script>
 </body>
 
 </html>

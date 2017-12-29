@@ -34,8 +34,8 @@
         </ul>
     </div>
     <div class="creditrating">
-        <img src="images/crite.png" alt="">
-        <p>经 中国质量管理品牌评价中心 综合评价，贵公司符合《全国产品质量信用企业评价条件》，认定为"中国产品质量AAA级信用企业"</p>
+        <img src="" alt="">
+        <p><!--经 中国质量管理品牌评价中心 综合评价，贵公司符合《全国产品质量信用企业评价条件》，认定为"中国产品质量AAA级信用企业"--></p>
     </div>
 
 </div>
@@ -47,7 +47,16 @@
     <img src="images/logo.png" alt="">
 </div>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/showalert.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/ajax.js"></script>
 <script>
+    myrequest("app_user/get.do",null,{},true,function(json){
+        $('.creditrating img').attr('src',json.data.CREDIT_LOGO);
+        $('.creditrating p').attr('src',json.data.CREDIT_INTO);
+
+    })
+
 
 </script>
 </body>

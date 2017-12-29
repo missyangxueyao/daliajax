@@ -97,15 +97,12 @@
     window.onload = function() {
         $('.homepagelist-nav li').click(function(){
             $(this).addClass('homepagenav-active').siblings().removeClass('homepagenav-active');
-//            $('.moreorder-main').css('display','none').eq($(this).index()).css('display','block');
             requestData();
-
         }).eq(0).click();
     };
 
 
     function requestData() {
-
         myrequest("app_order/findPage.do",null,{"PAGE": "0","STATUS":$('.homepagelist-nav .homepagenav-active').index()},true,function(json){
             $('#demo').jqPaginator({
 //                totalCounts:json.total,
@@ -130,10 +127,11 @@
                                     '</div>'+
                                     '<div class="gohandle"><a href="orderrevise.html?id='+result[i].ORDER_ID+'">去处理</a></div>'+
                                    ' </div>';
-
                             $('.moreorder-main').append(list);
-                            }
-
+                        }
+                        if($('.homepagelist-nav .homepagenav-active').index() == 1){
+                            $('.gohandle').css('display','none');
+                        }
                     });
 
                 }

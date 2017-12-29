@@ -37,18 +37,22 @@
         <h1>账号资料</h1>
         <div class="supplierclassify-info infomationreview-left">
             <p><em>供应商分类:</em> <!--OMD工厂--></p>
-            <p>
+            <p class="business-category ">
                 <em>经营品类:</em>
                 <!--<span class="supplierclassify-infoactive">女装</span>-->
             </p>
-            <p>
+            <p class="cloth-brand">
                 <em>服装品牌:</em>
                 <!--<span class="supplierclassify-infoactive">QLO</span>-->
             </p>
-            <p><em>详细地址:</em><!--钱农东路30号3-1--></p>
+            <p class="brand-name"><em>品牌名称:</em></p>
+            <p class="brand-style"><em>风格:</em></p>
+            <p class="brand-position"><em>品牌定位及价格:</em></p>
+            <p class="brand-logo"><em>品牌商标:</em></p>
+            <p class="auditing-address"><em>详细地址:</em><!--钱农东路30号3-1--></p>
         </div>
         <div class="supplierclassify-info infomationreview-right">
-            <p><em>生产规模:</em><!--1000人--></p>
+            <p class="product-size"><em>生产规模:</em><!--1000人--></p>
             <p><em>所在地区:</em><!--浙江省 - 杭州市 - 萧山区--></p>
         </div>
     </div>
@@ -116,37 +120,70 @@
             var objright = $('.supplierclassify .infomationreview-right p');
             var CATEGORY = '';
             if (result.CATEGORY == 0) {
-                CATEGORY = "ODM工厂"
+                CATEGORY = "ODM工厂";
+                $('.brand-name').css('display','none');
+                $('.brand-style').css('display','none');
+                $('.brand-position').css('display','none');
+                $('.brand-logo').css('display','none');
             } else if (result.CATEGORY == 1) {
-                CATEGORY = "设计师工作室"
+                CATEGORY = "设计师工作室";
+                $('.business-category').css('display','none');
+                $('.cloth-brand').css('display','none');
+                $('.supplierclassify-infoimgsecond').css('display','none');
+                $('.product-size').css('display','none');
             } else {
-                CATEGORY = "独立品牌设计师"
+                CATEGORY = "独立品牌设计师";
+                $('.business-category').css('display','none');
+                $('.cloth-brand').css('display','none');
+                $('.supplierclassify-infoimgsecond').css('display','none');
+                $('.product-size').css('display','none');
             }
-            console.log(result.CATEGORY);
             objleft.eq(0).append(CATEGORY);
+            //经营品类
             for (var i=0;i<result.typeList.length;i++){
                 var typeList = '<span class="supplierclassify-infoactive">'+result.typeList[i].TYPE_NAME+'</span>';
                 objleft.eq(1).append(typeList);
             }
+            //服装品牌
             for (var i=0;i<result.serverList.length;i++){
                 var serverList = '<span class="supplierclassify-infoactive">'+result.serverList[i].SERVER_NAME+'</span>';
                 objleft.eq(2).append(serverList);
             }
-            objleft.eq(3).append(result.ADDRESS);
+            //品牌名称
+            $('.brand-name').append(result.BRAND);
+            //风格
+            for (var i=0;i<result.serverList.length;i++){
+                var tipList = '<span class="supplierclassify-infoactive">'+result.tipList[i].TIP+'</span>';
+                $('.brand-style').append(tipList);
+            }
+            //品牌及定位
+            $('.brand-position').append(result.BRAND_INTRO);
+            //品牌商标
+//            $('.brand-logo').append(result.BRAND_LOGO);
+            $('.brand-logo').append('<img src="'+API_SERVICE_IMAGE_URL+result.BRAND_LOGO+'"/>');
+
+
+            $('.auditing-address').append(result.ADDRESS);
             objright.eq(0).append(result.SIZE);
             objright.eq(1).append(result.REGION);
             /********公司信息***********/
             var infoobjleft = $('.companyinfo .infomationreview-left p');
             var infoabjright = $('.companyinfo .infomationreview-right p');
-            infoobjleft.eq(0).append(result.CONTRACT);
-            infoobjleft.eq(1).append(result.EMAIL);
-            infoobjleft.eq(2).append(result.NUMBER);
-            infoobjleft.eq(3).append(result.CERT);
-            infoobjleft.eq(4).append(result.CERT_NO);
-            infoabjright.eq(0).append(result.TELPHONE);
-            infoabjright.eq(1).append(result.TYPE);
-            infoabjright.eq(2).append(result.REBATE);
-            infoabjright.eq(3).append(result.LIMIT);
+            infoobjleft.eq(0).append(result.CONTRACT);//联系人
+            infoobjleft.eq(1).append(result.EMAIL);//邮箱
+            infoobjleft.eq(2).append(result.NUMBER);//纳税编号
+            infoobjleft.eq(3).append(result.CERT);//营业执照名称
+            infoobjleft.eq(4).append(result.CERT_NO);//纳税编号
+            infoabjright.eq(0).append(result.TELPHONE);//联系人手机号
+            var nashuiType = '';
+            if(result.TYPE == 0){
+                nashuiType = '一般纳税人'
+            }else{
+                nashuiType = '小规模纳税人'
+            }
+            infoabjright.eq(1).append(nashuiType);//纳税资格
+            infoabjright.eq(2).append(result.REBATE);//纳税税率
+            infoabjright.eq(3).append(result.LIMIT);//营业执照期限
             $('.supplierclassify-infoimgfirst').append('<img src="'+API_SERVICE_IMAGE_URL+result.CERT_PIC+'"/>');
             var IN_PICarr = result.IN_PIC.split(';');
             console.info(IN_PICarr);

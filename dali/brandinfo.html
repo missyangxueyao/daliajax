@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>独立品牌完善资料</title>
+    <title>完善资料</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -27,7 +27,7 @@
         <div class="supplierclassify-radio supplierclassify-all">
             <strong>供应商分类:</strong>
             <p><input type="radio" name="supplier"><em onclick="redirect('infomation.html')"></em><span>ODM工厂</span></p>
-            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')"  ></em><span>设计师工作室</span></p>
+            <p><input type="radio" name="supplier"><em onclick="redirect('designerinfo.html')"></em><span>设计师工作室</span></p>
             <p><input type="radio" name="supplier"><em onclick="redirect('brandinfo.html')" class="supplierclassify-radiochecked"></em><span>独立品牌设计师</span></p>
         </div>
         <h1>基本信息</h1>
@@ -81,8 +81,9 @@
         </div>
         <div class="supplierclassify-info companyinfo-tax">
             <p><em>纳税编号:</em><input type="text" placeholder="请输入纳税编号"></p>
-            <p><em>纳税税率:</em><input type="text" placeholder="请输入纳税税率"></p>
+            <p class="cert-no"><em>纳税税率:</em><input type="text" placeholder="请输入纳税税率"></p>
             <p><em>营业执照名称:</em><input type="text" placeholder="请输入营业执照名称"> <strong> 例：杭州XXX有限公司</strong></p>
+            <p><em>营业执照编号:</em><input type="text" placeholder="请输入营业执照编号"> </p>
             <p>
                 <em>营业执照有效期:</em>
                 <select name="" class="year">
@@ -121,7 +122,8 @@
         </div>
     </div>
     <!--<div class="infosubmit" onclick="infomation()"><a href="index.html">提交</a></div>-->
-    <div class="infosubmit" onclick="infomation()"><a href="logoin.html">提交</a></div>
+    <!--<div class="infosubmit" onclick="infomation()"><a href="logoin.html">提交</a></div>-->
+    <div class="infosubmit" onclick="infomation()"><a href="javascript:void(0)">提交</a></div>
 </div>
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
@@ -219,18 +221,18 @@
     });
     function infomation() {
         var designerinfo = $('.designerinfo p');
-        var brand = designerinfo.eq(0).find('input').val();
+        var brand = $('.brandname').val();
         //获取选中的风格种类;
         var typeid = $('.supplierclassify-info .designer-tip').find('.supplierclassify-infoactive');
         var typeidarr = [];
         for (var i=0;i<typeid.size();i++) {
 //            var objarr = $('.supplierclassify-info .designer-tip .supplierclassify-infoactive').eq(i).html();
-            var objarr = $('.designer-tip .supplierclassify-infoactive').eq(i).attr('data-id');
+            var objarr = $('.designer-tip span').eq(i).attr('data-id');
             typeidarr.push(objarr);
         }
         var tip_id = typeidarr.join(",");
 //        品牌价格及定位描述
-        var brand_intro = designerinfo.eq(2).find('textarea').val();
+        var brand_intro = $('.brand-price').val();
         //详细地址
         var address = $('.supplierclassify-classify .address').val();
         var provinceValue = $('.province option:selected').text()+"-";
@@ -238,7 +240,7 @@
         var areaValue = $('.area option:selected').text();
         var region = provinceValue + cityValue + areaValue;
         var areaID = getKeyOfValue(areaDictionary,areaValue);
-       /***************************公司信息部分************************************/
+        /***************************公司信息部分************************************/
         var company = $('.companyinfo .companyinfo-contact p');
         var contact = company.eq(0).find('input').val();
         var telphone = company.eq(1).find('input').val();
@@ -314,10 +316,14 @@
             var plist = $('.companyinfo-contact p');
             $('.brandname').val(result.BRAND) ;//品牌名称
             $('.brand-price').val(result.BRAND_INTRO);//品牌及价格定位
-            var regoin = result.REGION.split('-');//区域选择
-            $('.factory-region select').eq(0).val(regoin[0]);
-            $('.factory-region select').eq(1).val(regoin[1]);
-            $('.factory-region select').eq(2).val(regoin[2]);
+            //商标注册获取
+            $('.goods-logo img').attr('src',result.BRAND_LOGO);
+            var regoin = result.REGION.split('-');
+            $('.province').val(regoin[0]);
+            restCity();
+            $('.city').val(regoin[1]);
+            restArea();
+            $('.area').val(regoin[2]);
             $('.address').val(result.ADDRESS);//详细地址
             plist.eq(0).find('input').val(result.CONTRACT);//联系人
             plist.eq(1).find('input').val(result.TELPHONE);//电话
@@ -341,10 +347,10 @@
             $('.day').val(limit[2]);
             //营业执照
             $('.cert-pic img').attr('src',result.CERT_PIC);
-            //商标注册获取
-            $('.goods-logo img').attr('src',result.BRAND_LOGO);
+            console.info(result.CERT_PIC)
+
             //经营状况
-            $('.jyzk').find('input').val(result.SALE_INFO);
+            $('.jyzk').find('textarea').val(result.SALE_INFO);
         });
     }
 

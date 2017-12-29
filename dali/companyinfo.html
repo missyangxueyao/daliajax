@@ -105,40 +105,38 @@
 
     };
     myrequest("app_user/get.do",null,myData,true,function(json){
-        if (json.response == 0) {
-            var result = json.data;
-            var objleft = $('.supplierclassify .infomationreview-left p');
-            var objright = $('.supplierclassify .infomationreview-right p');
-            objleft.eq(0).append(result.CATEGORY);
-            for (var i=0;i<result.typeList.length;i++){
-                var typeList = '<span class="supplierclassify-infoactive">'+result.typeList[i].TYPE_NAME+'</span>';
-                objleft.eq(1).append(typeList);
-            }
-            for (var i=0;i<result.serverList.length;i++){
-                var serverList = '<span class="supplierclassify-infoactive">'+result.serverList[i].SERVER_NAME+'</span>';
-                objleft.eq(2).append(serverList);
-            }
-            objleft.eq(3).append(result.ADDRESS);
-            objright.eq(0).append(result.SIZE);
-            objright.eq(1).append(result.REGION);
-        /********公司信息***********/
-            var infoobjleft = $('.companyinfo .infomationreview-left p');
-            var infoabjright = $('.companyinfo .infomationreview-right p');
-            infoobjleft.eq(0).append(result.CONTRACT);
-            infoobjleft.eq(1).append(result.EMAIL);
-            infoobjleft.eq(2).append(result.NUMBER);
-            infoobjleft.eq(3).append(result.CERT);
-            infoobjleft.eq(4).append(result.CERT_NO);
-            infoabjright.eq(0).append(result.TELPHONE);
-            infoabjright.eq(1).append(result.TYPE);
-            infoabjright.eq(2).append(result.REBATE);
-            infoabjright.eq(3).append(result.LIMIT);
-            $('.supplierclassify-infoimgfirst').append('<img src="'+API_SERVICE_IMAGE_URL+result.CERT_PIC+'"/>');
-            var IN_PICarr = result.IN_PIC.split(';');
-            for (var i=0;i<IN_PICarr.length;i++){
-                var imgs = '<img src="'+API_SERVICE_IMAGE_URL+IN_PICarr[i]+'"/>';
-                $('.supplierclassify-infoimgsecond').append(imgs)
-            }
+        var result = json.data;
+        var objleft = $('.supplierclassify .infomationreview-left p');
+        var objright = $('.supplierclassify .infomationreview-right p');
+        objleft.eq(0).append(result.CATEGORY);
+        for (var i=0;i<result.typeList.length;i++){
+            var typeList = '<span class="supplierclassify-infoactive">'+result.typeList[i].TYPE_NAME+'</span>';
+            objleft.eq(1).append(typeList);
+        }
+        for (var i=0;i<result.serverList.length;i++){
+            var serverList = '<span class="supplierclassify-infoactive">'+result.serverList[i].SERVER_NAME+'</span>';
+            objleft.eq(2).append(serverList);
+        }
+        objleft.eq(3).append(result.ADDRESS);
+        objright.eq(0).append(result.SIZE);
+        objright.eq(1).append(result.REGION);
+    /********公司信息***********/
+        var infoobjleft = $('.companyinfo .infomationreview-left p');
+        var infoabjright = $('.companyinfo .infomationreview-right p');
+        infoobjleft.eq(0).append(result.CONTRACT);
+        infoobjleft.eq(1).append(result.EMAIL);
+        infoobjleft.eq(2).append(result.NUMBER);
+        infoobjleft.eq(3).append(result.CERT);
+        infoobjleft.eq(4).append(result.CERT_NO);
+        infoabjright.eq(0).append(result.TELPHONE);
+        infoabjright.eq(1).append(result.TYPE);
+        infoabjright.eq(2).append(result.REBATE);
+        infoabjright.eq(3).append(result.LIMIT);
+        $('.supplierclassify-infoimgfirst').append('<img src="'+API_SERVICE_IMAGE_URL+result.CERT_PIC+'"/>');
+        var IN_PICarr = result.IN_PIC.split(';');
+        for (var i=0;i<IN_PICarr.length;i++){
+            var imgs = '<img src="'+API_SERVICE_IMAGE_URL+IN_PICarr[i]+'"/>';
+            $('.supplierclassify-infoimgsecond').append(imgs)
         }
     });
 </script>

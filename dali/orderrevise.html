@@ -36,18 +36,8 @@
     <ul class="orderrevise-color">
         <!--<li>黑色s <input type="text"></li>-->
         <!--<li>黑色m <input type="text"></li>-->
-        <!--<li>黑色l <input type="text"></li>-->
-        <!--<li>白色s <input type="text"></li>-->
-        <!--<li>黑色s <input type="text"></li>-->
-        <!--<li>黑色s <input type="text"></li>-->
-        <!--<li>白色s <input type="text"></li>-->
-        <!--<li>驼色s <input type="text"></li>-->
-        <!--<li>卡其色s <input type="text"></li>-->
-        <!--<li>红色s <input type="text"></li>-->
-        <!--<li>黑色s <input type="text"></li>-->
-        <!--<li>黑色s <input type="text"></li>-->
     </ul>
-    <div class="infosubmit">确认修改</div>
+    <div class="infosubmit" onclick="updata()">确认修改</div>
 </div>
 <div class="footer">
     <h1>公司名称：达利（中国）有限公司</h1>
@@ -64,14 +54,14 @@
 </body>
 
 <script>
-
+    var price = '';
     myrequest("app_order/get.do",null,{"ORDER_ID": GetQueryString('id')},true,function(json){
         var result = json.data;
         var list = '<div class="homepagelist-one">'+
                 '<img src="'+API_SERVICE_IMAGE_URL+result.LOGO+'" alt="">'+
                 '<div class="homepagelist-oneright">'+
                 '<h1>'+result.GOODS_NAME+'</h1>'+
-                '<h2>单价 <span>￥'+result.PRICE+'</span></h2>'+
+                '<h2>单价 <span data-p="'+result.PRICE+'" class="price">￥'+result.PRICE+'</span></h2>'+
                 '<h3>X'+result.NUM+'件</h3>'+
                 '<p>'+result.INTRO+'</p>'+
                 '<div class="goodstime">货期：'+result.DAY+' <h4>合计：<span>'+result.ORDER_AMOUNT+'元</span></h4></div>'+
@@ -81,11 +71,49 @@
         $('.bodymain').append(list);
 
         for (var i=0;i<result.cartSizes.length;i++){
-            var cartSize = result.cartSizes[i]
-            $('.orderrevise-color').append('<li>'+cartSize.COLOR+cartSize.SIZE+'<input type="text" value="'+cartSize.NUM+'"></li>');
+            var cartSize = result.cartSizes[i];
+            $('.orderrevise-color').append('<li><span>'+cartSize.COLOR+'</span><em>'+cartSize.SIZE+'</em><input type="text" value="'+cartSize.NUM+'"></li>');
         }
+         price= $('.price').attr('data-p');
 
     });
+
+    function updata(){
+        var sizeArr = [];
+        var colorArr = [];
+        var numArr = [];
+        var detatl_arr = [];
+        var detatl_json = {};
+        for (var i=0;i<$('.orderrevise-color li').length;i++){
+            var obj = $('.orderrevise-color li').eq(i);
+            var size = obj.find('em').text();
+            var color = obj.find('span').text();
+            var num = obj.find('input').val();
+            sizeArr.push(size);
+            colorArr.push(color);
+            numArr.push(num);
+            detatl_json = {
+                "SIZE":sizeArr[i],
+                "COLOR":colorArr[i],
+                "COLOR_PRICE":price,
+                "NUM":numArr[i]
+            };
+            detatl_arr.push(detatl_json)
+        }
+        var  myData = {
+           "ORDER_ID": GetQueryString('id'),
+           "DETAIL_JSON":detatl_arr
+        };
+        myrequest("app_order/update.do",null,myData,true,function(json) {
+            window.location.href = 'moreorder.html'
+
+        })
+    }
+
+
+
+
+
 
 </script>
 

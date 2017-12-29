@@ -24,6 +24,7 @@ function getList(status, page, page_size, getPage) {
                 }
             });
         } else {
+            $(".homepagegoods .homepage-main").html('');
             setGoodsHtml(data.data, page_size);
         }
     });
@@ -43,6 +44,19 @@ function setGoodsHtml(list, page_size) {
         html += getGoodsHtml(list[i]);
     }
     $(".homepagegoods .homepage-main").html(html);
+
+    /*******************changebyyangxueyao**********************************/
+    var status = $('.homepagenav-active').index();
+    if (status == 2){
+        $('.homepagelist-one').append('<div class="goprint"><a href="goprint.html">打印吊牌</a></div>')
+    }
+    if (status == 3){
+        $('.homepagelist-one').append('<div class="goprint"><a href="goodsinfomation.html">再次编辑</a></div>')
+    }
+    if (status == 4){
+        $('.homepagelist-one').append('<div class="goprint"><a href="goshipper.html">去发货</a></div>')
+    }
+    /****************************************************************/
 }
 
 /**
@@ -51,11 +65,23 @@ function setGoodsHtml(list, page_size) {
  * @return {string}
  */
 function getGoodsHtml(info) {
-    var html = '<div class="homepagelist-one">' +
+    var html = '';
+     html += '<div class="homepagelist-one">' +
         '    <img src="'+API_SERVICE_IMAGE_URL+info["LOGO"]+'" alt="">' +
         '    <h1>'+info.GOODS_NAME+'</h1>' +
         '    <h2>单价 <span>￥'+info.PRICE+'</span></h2>' +
         '    <p>季节：'+info.SEASON+'&nbsp;&nbsp;&nbsp;&nbsp;品类：'+info.TYPE_NAME+'&nbsp;&nbsp;&nbsp;&nbsp;起订量：'+info.MIN_QUINTITY+'&nbsp;&nbsp;&nbsp;&nbsp;颜色：'+info.COLOR+'&nbsp;&nbsp;&nbsp;&nbsp;尺寸：'+info.SIZE+'&nbsp;&nbsp;&nbsp;&nbsp;面料：'+info.FORMS+'&nbsp;&nbsp;&nbsp;&nbsp;货期：'+info.DAY+'天</p>' +
         '</div>';
+    /*******************************changebyyangxueyao*********************************/
+    if (info.VERIFY = '5'){
+        html += '<em>发货中</em>'
+    }
+    if (info.VERIFY = '6'){
+        html += '<em>已收货</em>'
+    }
+
+    /****************************************************************/
+
     return html;
+
 }

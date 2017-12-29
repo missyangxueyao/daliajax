@@ -229,16 +229,15 @@ function GET_LADDER_ARRAY() {
  * @constructor
  */
 function GET_POLL_PIC() {
-    var str = '', isNull = false;
+    var str = '';
     $(".imgLabel").each(function () {
         var obj = $(this);
         if (!obj.find("img").attr("src")) {
-            isNull = true;
             return ;
         }
         str = str ? (str + ";" + obj.find("img").attr("src")) : obj.find("img").attr("src");
     });
-    return isNull ? "" : str;
+    return str;
 }
 
 /**
